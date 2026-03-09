@@ -10,7 +10,6 @@ from contextlib import asynccontextmanager
 from datetime import date, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 import asyncpg
 from fastapi import FastAPI, Request, Response
@@ -24,7 +23,7 @@ from iten_forge.plan import Plan
 
 # -- Lifespan --
 
-db_pool: Optional[asyncpg.Pool] = None
+db_pool: asyncpg.Pool | None = None
 
 
 @asynccontextmanager
@@ -32,7 +31,8 @@ async def lifespan(app: FastAPI):
     global db_pool
     db_pool = await asyncpg.create_pool(DATABASE_URL, min_size=2, max_size=10)
     async with db_pool.acquire() as conn:
-        await conn.execute("""
+        await conn.execute(
+            """
             CREATE TABLE IF NOT EXISTS journal_entries (
                 id SERIAL PRIMARY KEY,
                 created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -45,7 +45,8 @@ async def lifespan(app: FastAPI):
             CREATE INDEX IF NOT EXISTS idx_entries_date ON journal_entries(training_date);
             CREATE INDEX IF NOT EXISTS idx_entries_week ON journal_entries(week);
             CREATE INDEX IF NOT EXISTS idx_entries_type ON journal_entries(entry_type);
-        """)
+        """
+        )
     yield
     if db_pool:
         await db_pool.close()
@@ -140,18 +141,18 @@ class EntryType(str, Enum):
 
 
 class JournalEntry(BaseModel):
-    id: Optional[int] = None
-    created_at: Optional[str] = None
+    id: int | None = None
+    created_at: str | None = None
     training_date: str
     week: int
     entry_type: str
     content: str
-    rpe_value: Optional[int] = None
+    rpe_value: int | None = None
 
 
 @app.get("/api/entries")
 async def get_entries(
-    week: Optional[int] = None, entry_type: Optional[str] = None, limit: int = 50
+    week: int | None = None, entry_type: str | None = None, limit: int = 50
 ):
     query = "SELECT * FROM journal_entries WHERE 1=1"
     params = []
@@ -263,7 +264,11 @@ async def whatsapp_webhook(request: Request):
     if week == 0:
         week = max(1, min(12, (today - plan.start_date).days // 7 + 1))
 
-    entry_type = parsed["type"].value if isinstance(parsed["type"], EntryType) else parsed["type"]
+    entry_type = (
+        parsed["type"].value
+        if isinstance(parsed["type"], EntryType)
+        else parsed["type"]
+    )
 
     async with db_pool.acquire() as conn:
         await conn.execute(
