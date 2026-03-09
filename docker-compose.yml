@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: iten_forge
+      POSTGRES_PASSWORD: iten_forge
+      POSTGRES_DB: iten_forge
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iten_forge"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  server:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://iten_forge:iten_forge@db:5432/iten_forge
+      ITEN_FORGE_GOAL_TIME: "${ITEN_FORGE_GOAL_TIME:-2:50:00}"
+      ITEN_FORGE_START_DATE: "${ITEN_FORGE_START_DATE:-2026-03-09}"
+      ITEN_FORGE_UNIT: "${ITEN_FORGE_UNIT:-mi}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

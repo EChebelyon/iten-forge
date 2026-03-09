@@ -1,0 +1,35 @@
+name: Daily Workout Reminder
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install --only main
+
+      - name: Send workout reminder
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
+          MY_WHATSAPP_NUMBER: ${{ secrets.MY_WHATSAPP_NUMBER }}
+          ITEN_FORGE_GOAL_TIME: ${{ vars.ITEN_FORGE_GOAL_TIME || '2:50:00' }}
+          ITEN_FORGE_START_DATE: ${{ vars.ITEN_FORGE_START_DATE || '2026-03-09' }}
+          ITEN_FORGE_UNIT: ${{ vars.ITEN_FORGE_UNIT || 'mi' }}
+        run: poetry run python scripts/send_reminder.py

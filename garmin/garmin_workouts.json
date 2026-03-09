@@ -1,0 +1,3552 @@
+[
+  {
+    "date": "2026-03-09",
+    "week": 1,
+    "phase": "Build",
+    "name": "W1_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "60 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 20,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 20,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 20,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-10",
+    "week": 1,
+    "phase": "Build",
+    "name": "W1_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "5 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-11",
+    "week": 1,
+    "phase": "Build",
+    "name": "W1_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "50 min with 30 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 30,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-12",
+    "week": 1,
+    "phase": "Build",
+    "name": "W1_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "5 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-13",
+    "week": 1,
+    "phase": "Build",
+    "name": "W1_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "50 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 50,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-14",
+    "week": 1,
+    "phase": "Build",
+    "name": "W1_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "25K long run \u2014 first 15K easy, last 10K descending to marathon pace",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 25,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-16",
+    "week": 2,
+    "phase": "Build",
+    "name": "W2_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "60 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 20,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 20,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 20,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-17",
+    "week": 2,
+    "phase": "Build",
+    "name": "W2_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "6 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-18",
+    "week": 2,
+    "phase": "Build",
+    "name": "W2_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "55 min with 33 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 11,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 33,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 11,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-19",
+    "week": 2,
+    "phase": "Build",
+    "name": "W2_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "6 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-20",
+    "week": 2,
+    "phase": "Build",
+    "name": "W2_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "55 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 55,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-21",
+    "week": 2,
+    "phase": "Build",
+    "name": "W2_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "28K long run \u2014 first 18K easy, last 10K progressive to MP",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 28,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-23",
+    "week": 3,
+    "phase": "Build",
+    "name": "W3_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "65 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 21,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 21,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-24",
+    "week": 3,
+    "phase": "Build",
+    "name": "W3_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "7 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-25",
+    "week": 3,
+    "phase": "Build",
+    "name": "W3_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "60 min with 36 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 12,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 36,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 12,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-26",
+    "week": 3,
+    "phase": "Build",
+    "name": "W3_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "8 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-27",
+    "week": 3,
+    "phase": "Build",
+    "name": "W3_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "60 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 60,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-28",
+    "week": 3,
+    "phase": "Build",
+    "name": "W3_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "30K with 3 \u00d7 5K @ MP (6:10/mi) w/ 1K easy between",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 30,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-30",
+    "week": 4,
+    "phase": "Build",
+    "name": "W4_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "65 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 21,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 21,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-03-31",
+    "week": 4,
+    "phase": "Build",
+    "name": "W4_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "8 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-01",
+    "week": 4,
+    "phase": "Build",
+    "name": "W4_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "65 min with 39 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 13,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 39,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 13,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-02",
+    "week": 4,
+    "phase": "Build",
+    "name": "W4_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "10 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-03",
+    "week": 4,
+    "phase": "Build",
+    "name": "W4_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "65 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 65,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-04",
+    "week": 4,
+    "phase": "Build",
+    "name": "W4_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "32K progressive \u2014 start 8:30/mi, finish last 8K at MP",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 32,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-06",
+    "week": 5,
+    "phase": "Peak",
+    "name": "W5_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "65 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 21,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 21,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-07",
+    "week": 5,
+    "phase": "Peak",
+    "name": "W5_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "9 \u00d7 1000m @ 5:15\u20135:25/mi (60\u201375s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-08",
+    "week": 5,
+    "phase": "Peak",
+    "name": "W5_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "70 min with 42 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 14,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 42,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 14,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-09",
+    "week": 5,
+    "phase": "Peak",
+    "name": "W5_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "12 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-10",
+    "week": 5,
+    "phase": "Peak",
+    "name": "W5_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "70 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 70,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-11",
+    "week": 5,
+    "phase": "Peak",
+    "name": "W5_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "34K with 4 \u00d7 5K @ MP (6:10/mi) w/ 1K easy between",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 34,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-13",
+    "week": 6,
+    "phase": "Peak",
+    "name": "W6_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "70 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 23,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 24,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-14",
+    "week": 6,
+    "phase": "Peak",
+    "name": "W6_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "10 \u00d7 1000m @ 5:15\u20135:25/mi (60\u201375s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-15",
+    "week": 6,
+    "phase": "Peak",
+    "name": "W6_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "75 min with 45 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 45,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-16",
+    "week": 6,
+    "phase": "Peak",
+    "name": "W6_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "13 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-17",
+    "week": 6,
+    "phase": "Peak",
+    "name": "W6_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "75 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 75,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-18",
+    "week": 6,
+    "phase": "Peak",
+    "name": "W6_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "35K progressive \u2014 start easy, last 12K descending to 6:10/mi",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 35,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-20",
+    "week": 7,
+    "phase": "Peak",
+    "name": "W7_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "70 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 23,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 24,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-21",
+    "week": 7,
+    "phase": "Peak",
+    "name": "W7_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "10 \u00d7 1000m @ 5:15\u20135:25/mi (60\u201375s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-22",
+    "week": 7,
+    "phase": "Peak",
+    "name": "W7_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "80 min with 48 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 16,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 48,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 16,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-23",
+    "week": 7,
+    "phase": "Peak",
+    "name": "W7_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "15 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-24",
+    "week": 7,
+    "phase": "Peak",
+    "name": "W7_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "80 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 80,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-25",
+    "week": 7,
+    "phase": "Peak",
+    "name": "W7_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "38K with 5 \u00d7 5K @ MP (6:10/mi) w/ 1K easy between",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 38,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-27",
+    "week": 8,
+    "phase": "Peak",
+    "name": "W8_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "70 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 23,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 24,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-28",
+    "week": 8,
+    "phase": "Peak",
+    "name": "W8_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "10 \u00d7 1000m @ 5:15\u20135:25/mi (60\u201375s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-29",
+    "week": 8,
+    "phase": "Peak",
+    "name": "W8_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "75 min with 45 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 45,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-04-30",
+    "week": 8,
+    "phase": "Peak",
+    "name": "W8_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "15 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-01",
+    "week": 8,
+    "phase": "Peak",
+    "name": "W8_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "75 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 75,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-02",
+    "week": 8,
+    "phase": "Peak",
+    "name": "W8_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "40K progressive \u2014 THE BIG ONE. Start 8:30, last 15K at MP",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 40,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-04",
+    "week": 9,
+    "phase": "Peak",
+    "name": "W9_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "65 min progressive: 8:30 \u2192 6:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 21,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 21,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 23,
+        "target": "6:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-05",
+    "week": 9,
+    "phase": "Peak",
+    "name": "W9_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "10 \u00d7 1000m @ 5:15\u20135:25/mi (60\u201375s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 75,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-06",
+    "week": 9,
+    "phase": "Peak",
+    "name": "W9_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "70 min with 42 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 14,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 42,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 14,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-07",
+    "week": 9,
+    "phase": "Peak",
+    "name": "W9_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "13 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-08",
+    "week": 9,
+    "phase": "Peak",
+    "name": "W9_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "70 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 70,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-09",
+    "week": 9,
+    "phase": "Peak",
+    "name": "W9_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "35K with 5 \u00d7 5K @ MP (6:10/mi) w/ 800m easy between",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 35,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-11",
+    "week": 10,
+    "phase": "Taper",
+    "name": "W10_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "60 min progressive: 8:30 \u2192 6:15/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 20,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 20,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 20,
+        "target": "6:15/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-12",
+    "week": 10,
+    "phase": "Taper",
+    "name": "W10_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "8 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-13",
+    "week": 10,
+    "phase": "Taper",
+    "name": "W10_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "60 min with 36 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 12,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 36,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 12,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-14",
+    "week": 10,
+    "phase": "Taper",
+    "name": "W10_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "10 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-15",
+    "week": 10,
+    "phase": "Taper",
+    "name": "W10_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "60 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 60,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-16",
+    "week": 10,
+    "phase": "Taper",
+    "name": "W10_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "30K progressive \u2014 start easy, last 10K at MP. Begin taper.",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 30,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-18",
+    "week": 11,
+    "phase": "Taper",
+    "name": "W11_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "50 min progressive: 8:30 \u2192 6:15/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 16,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 16,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 18,
+        "target": "6:15/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-19",
+    "week": 11,
+    "phase": "Taper",
+    "name": "W11_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "6 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-20",
+    "week": 11,
+    "phase": "Taper",
+    "name": "W11_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "45 min with 27 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 9,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 27,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 9,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-21",
+    "week": 11,
+    "phase": "Taper",
+    "name": "W11_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "7 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-22",
+    "week": 11,
+    "phase": "Taper",
+    "name": "W11_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "45 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 45,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-23",
+    "week": 11,
+    "phase": "Taper",
+    "name": "W11_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "22K easy with last 5K at marathon pace. Stay sharp.",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 22,
+        "target": "progressive to MP"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-25",
+    "week": 12,
+    "phase": "Taper",
+    "name": "W12_Mon_Progressive_Run",
+    "title": "Progressive Run",
+    "summary": "40 min progressive: 8:30 \u2192 6:30/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 13,
+        "target": "8:30/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 13,
+        "target": "7:15/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 14,
+        "target": "6:30/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-26",
+    "week": 12,
+    "phase": "Taper",
+    "name": "W12_Tue_Track_Intervals",
+    "title": "Track Intervals",
+    "summary": "4 \u00d7 1000m @ 5:15\u20135:25/mi (90s jog recovery)",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "interval",
+        "distance_m": 1000,
+        "target": "5:15\u20135:25/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_sec": 90,
+        "target": "jog"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-27",
+    "week": 12,
+    "phase": "Taper",
+    "name": "W12_Wed_Tempo_Run",
+    "title": "Tempo Run",
+    "summary": "30 min with 18 min @ 5:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 6,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "active",
+        "duration_min": 18,
+        "target": "5:50\u20136:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 6,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-28",
+    "week": 12,
+    "phase": "Taper",
+    "name": "W12_Thu_Fartlek",
+    "title": "Fartlek",
+    "summary": "4 \u00d7 (3 min ON / 1 min OFF) \u2014 ON @ 5:40\u20135:50/mi\u20135:50\u20136:00/mi",
+    "steps": [
+      {
+        "type": "warmup",
+        "duration_min": 15,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "interval",
+        "duration_min": 3,
+        "target": "5:40\u20135:50/mi"
+      },
+      {
+        "type": "recovery",
+        "duration_min": 1,
+        "target": "8:30\u20139:00/mi"
+      },
+      {
+        "type": "cooldown",
+        "duration_min": 10,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-29",
+    "week": 12,
+    "phase": "Taper",
+    "name": "W12_Fri_Easy_Run",
+    "title": "Easy Run",
+    "summary": "30 min easy @ 8:30\u20139:00/mi",
+    "steps": [
+      {
+        "type": "active",
+        "duration_min": 30,
+        "target": "8:30\u20139:00/mi"
+      }
+    ]
+  },
+  {
+    "date": "2026-05-30",
+    "week": 12,
+    "phase": "Taper",
+    "name": "W12_Sat_Long_Run",
+    "title": "Long Run",
+    "summary": "10K shakeout with 4 \u00d7 1K at MP. Trust the work.",
+    "steps": [
+      {
+        "type": "active",
+        "distance_km": 10,
+        "target": "progressive to MP"
+      }
+    ]
+  }
+]
