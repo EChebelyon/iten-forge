@@ -19,6 +19,7 @@ COPY --from=deps /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.
 COPY --from=deps /usr/local/bin/uvicorn /usr/local/bin/uvicorn
 
 COPY iten_forge/ ./iten_forge/
+COPY static/ ./static/
 
 EXPOSE 8000
 

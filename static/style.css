@@ -1,0 +1,395 @@
+:root {
+  --bg: #0f0f0f;
+  --surface: #1a1a1a;
+  --surface-hover: #222;
+  --border: #2a2a2a;
+  --text: #e0ddd5;
+  --text-muted: #807c74;
+  --accent: #c4501a;
+  --accent-dim: #8b3812;
+  --green: #4a7c3f;
+  --sand: #b8a080;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --mono: "SF Mono", "Cascadia Code", "Fira Code", monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* -- Header -- */
+
+.header {
+  padding: 2.5rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.header h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.header p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* -- Controls -- */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.controls label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.controls input,
+.controls select {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  border-radius: 3px;
+}
+
+.controls input:focus,
+.controls select:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+.controls input[type="text"] {
+  width: 7rem;
+  text-align: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn {
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: var(--accent-dim);
+}
+
+/* -- Pace zones -- */
+
+.paces {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.pace-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.pace-zone .zone-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pace-zone .zone-value {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--sand);
+}
+
+/* -- Plan -- */
+
+.plan {
+  padding: 1.5rem 2rem 3rem;
+}
+
+.week {
+  margin-bottom: 0.5rem;
+}
+
+.week-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.week-header:hover .week-title {
+  color: var(--text);
+}
+
+.week-number {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  width: 1.8rem;
+  flex-shrink: 0;
+}
+
+.week-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.week-phase {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.phase-build {
+  color: var(--green);
+  background: rgba(74, 124, 63, 0.12);
+}
+
+.phase-peak {
+  color: var(--accent);
+  background: rgba(196, 80, 26, 0.12);
+}
+
+.phase-taper {
+  color: var(--sand);
+  background: rgba(184, 160, 128, 0.12);
+}
+
+.week-toggle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-left: auto;
+  transition: transform 0.2s;
+}
+
+.week.open .week-toggle {
+  transform: rotate(90deg);
+}
+
+.week-days {
+  display: none;
+  padding: 0.25rem 0 1rem 2.5rem;
+}
+
+.week.open .week-days {
+  display: block;
+}
+
+/* -- Day cards -- */
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.6rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.day-card:hover {
+  border-color: var(--accent-dim);
+  background: var(--surface-hover);
+}
+
+.day-card.active {
+  border-color: var(--accent);
+}
+
+.day-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.day-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--sand);
+  flex-shrink: 0;
+}
+
+.day-title {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.day-duration {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: auto;
+}
+
+/* -- Workout detail -- */
+
+.workout-detail {
+  display: none;
+  margin-top: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.workout-detail.visible {
+  display: block;
+}
+
+.detail-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.detail-summary {
+  font-size: 0.8rem;
+  color: var(--sand);
+  margin-bottom: 0.75rem;
+}
+
+.detail-section {
+  margin-bottom: 0.6rem;
+}
+
+.detail-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+
+.detail-text {
+  font-size: 0.8rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.detail-evening {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.garmin-steps {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.3rem;
+}
+
+.garmin-step {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+}
+
+.step-warmup { border-left: 2px solid var(--green); }
+.step-active, .step-interval { border-left: 2px solid var(--accent); }
+.step-recovery { border-left: 2px solid var(--sand); }
+.step-cooldown { border-left: 2px solid var(--text-muted); }
+
+/* -- Loading -- */
+
+.loading {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* -- Responsive -- */
+
+@media (max-width: 768px) {
+  .header { padding: 1.5rem 1rem 1.25rem; }
+  .controls { padding: 1rem; gap: 0.75rem; }
+  .paces { padding: 0.75rem 1rem; gap: 1rem; }
+  .plan { padding: 1rem; }
+
+  .days-grid {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .day-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: auto;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .day-label { width: 2rem; }
+  .day-duration { margin-top: 0; margin-left: auto; }
+  .week-days { padding-left: 0.5rem; }
+}
+
+@media (max-width: 480px) {
+  .controls { flex-direction: column; align-items: flex-start; }
+  .paces { flex-direction: column; gap: 0.5rem; }
+}

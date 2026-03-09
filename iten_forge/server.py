@@ -9,10 +9,13 @@ import re
 from contextlib import asynccontextmanager
 from datetime import date, timedelta
 from enum import Enum
+from pathlib import Path
 from typing import Optional
 
 import asyncpg
 from fastapi import FastAPI, Request, Response
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from twilio.twiml.messaging_response import MessagingResponse
 
@@ -54,6 +57,18 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
+if STATIC_DIR.is_dir():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+
+@app.get("/")
+async def root():
+    index = STATIC_DIR / "index.html"
+    if index.is_file():
+        return FileResponse(str(index))
+    return {"message": "Iten Forge API", "docs": "/docs"}
 
 
 def _plan(goal: str | None = None, unit: str | None = None) -> Plan:
