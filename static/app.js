@@ -4,6 +4,8 @@ const ICON_PATH = "/static/icons";
 const goalInput = document.getElementById("goal");
 const unitSelect = document.getElementById("unit");
 const generateBtn = document.getElementById("generate");
+const skipPmCheckbox = document.getElementById("skip-pm");
+const skipPmMessageEl = document.getElementById("skip-pm-message");
 const pacesEl = document.getElementById("paces");
 const pacesSectionEl = document.getElementById("paces-section");
 const planEl = document.getElementById("plan");
@@ -12,6 +14,52 @@ const mileageSectionEl = document.getElementById("mileage-section");
 const mileageChartEl = document.getElementById("mileage-chart");
 
 const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+// Stash the last fetched data so the toggle can re-render without refetching
+let lastPlanData = null;
+
+// -- Skip PM messages --
+
+const SKIP_PM_MESSAGES = [
+  "<strong>Good call.</strong> The elites in Iten who run doubles? That's their full-time job. They wake up, run, nap, eat, run again. No commute, no emails, no bedtime negotiations with a toddler. You have a life — quality over quantity. Take your kids on a bike ride. Grab a smoothie with a friend. Walk on the beach. Those miles you're trading are buying better sleep, real connection, and the kind of emotional health that actually makes you faster.",
+  "<strong>Wise move.</strong> In the Kenyan training camps, doubles work because the athletes sleep 10 hours a night and someone else cooks their ugali. You're out here juggling a job, a family, and whatever your inbox did today. Swap the PM run for something that fills your cup — call a friend, cook dinner with your partner, play with your dog. Rested legs and a happy brain will carry you further than 4 extra miles ever could.",
+  "<strong>Look at you, choosing life.</strong> Eliud Kipchoge doesn't do his own laundry. The runners in Iten have a support system built for doubles. You are not in Iten. You are a mere mortal with responsibilities and people who like seeing your face. Go be present. Recovery happens in relationships too, and the runners who last decades are the ones who didn't sacrifice every evening at the altar of junk miles.",
+  "<strong>Smart.</strong> That PM recovery run was worth maybe 4 miles. You know what's also worth 4 miles? Sitting on a porch doing nothing. Riding bikes with your kids. Going for a walk and actually looking at trees. The Iten elites can absorb doubles because running is literally all they do. For the rest of us, quality beats volume every time. Your aerobic base will survive. Your friendships might not if you keep ditching dinner.",
+  "<strong>Permission granted.</strong> Here's a secret the Kenyan coaches won't tell you: the magic isn't in the mileage, it's in the recovery. And recovery isn't just sleep — it's laughing with friends, being outside without a pace target, remembering you're a human who runs, not a runner who occasionally humans. Go live. You're basically training right now.",
+];
+
+let skipPmTimer = null;
+
+function dismissSkipPmMessage() {
+  if (skipPmTimer) {
+    clearTimeout(skipPmTimer);
+    skipPmTimer = null;
+  }
+  const card = skipPmMessageEl.querySelector(".skip-pm-card");
+  if (card) {
+    card.classList.add("fading");
+    card.addEventListener("animationend", () => {
+      skipPmMessageEl.innerHTML = "";
+    });
+  }
+}
+
+function renderSkipPmMessage(show) {
+  if (skipPmTimer) {
+    clearTimeout(skipPmTimer);
+    skipPmTimer = null;
+  }
+  if (!show) {
+    skipPmMessageEl.innerHTML = "";
+    return;
+  }
+  const msg = SKIP_PM_MESSAGES[Math.floor(Math.random() * SKIP_PM_MESSAGES.length)];
+  skipPmMessageEl.innerHTML = `<div class="skip-pm-card">${msg}<button class="skip-pm-close" onclick="dismissSkipPmMessage()" aria-label="Close">&times;</button></div>`;
+
+  skipPmTimer = setTimeout(() => {
+    dismissSkipPmMessage();
+  }, 30000);
+}
 
 // -- Disclaimers --
 
@@ -143,13 +191,51 @@ async function fetchPlan() {
     const resp = await fetch(`${API}?goal=${encodeURIComponent(goal)}&unit=${unit}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
+    lastPlanData = data;
     renderPaces(data.paces);
     pacesSectionEl.style.display = "block";
-    if (data.mileage) renderMileageChart(data.mileage, unit);
-    await renderPlan(data.workouts);
+    renderWithPmToggle();
   } catch (err) {
     planEl.innerHTML = `<div class="loading">Failed to load plan: ${err.message}</div>`;
   }
+}
+
+function renderWithPmToggle() {
+  if (!lastPlanData) return;
+  const skipPm = skipPmCheckbox.checked;
+  const unit = unitSelect.value;
+
+  let workouts = lastPlanData.workouts;
+  if (skipPm) {
+    workouts = workouts.map((w) => ({ ...w, evening: w.evening?.title?.includes("Recovery") ? null : w.evening }));
+  }
+
+  if (lastPlanData.mileage) {
+    let mileage = lastPlanData.mileage;
+    if (skipPm) {
+      // Strip recovery doubles: 3 x 40min sessions at recovery pace
+      // Approximate the mileage reduction per week
+      const recoveryPaceMinPerUnit = estimateRecoveryPace(lastPlanData.paces);
+      const doublesPerWeek = 3;
+      const doubleMinutes = 40;
+      const doublesDistance = (doublesPerWeek * doubleMinutes) / recoveryPaceMinPerUnit;
+      mileage = mileage.map((w, i) => {
+        const reduction = (i === 11) ? doublesDistance * (2 / 3) : doublesDistance; // week 12 only has 2
+        return { ...w, mileage: Math.round((w.mileage - reduction) * 10) / 10 };
+      });
+    }
+    renderMileageChart(mileage, unit);
+  }
+
+  renderPlan(workouts);
+}
+
+function estimateRecoveryPace(paces) {
+  // Parse recovery pace string like "10:30-11:00/mi" → midpoint in minutes
+  const raw = paces.recovery || "";
+  const match = raw.match(/(\d+):(\d+)/);
+  if (!match) return 11; // fallback
+  return parseInt(match[1]) + parseInt(match[2]) / 60;
 }
 
 // -- Render pace zones --
@@ -290,6 +376,11 @@ function garminStep(step) {
 generateBtn.addEventListener("click", fetchPlan);
 goalInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") fetchPlan();
+});
+
+skipPmCheckbox.addEventListener("change", () => {
+  renderSkipPmMessage(skipPmCheckbox.checked);
+  renderWithPmToggle();
 });
 
 fetchPlan();

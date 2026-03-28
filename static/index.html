@@ -20,22 +20,32 @@
 
     <section class="input-section">
       <div class="controls">
-        <div class="control-group">
-          <label for="goal">Goal Time</label>
-          <input type="text" id="goal" value="2:50:00" placeholder="H:MM:SS">
+        <div class="controls-top">
+          <div class="control-group">
+            <label for="goal">Goal Time</label>
+            <input type="text" id="goal" value="2:50:00" placeholder="H:MM:SS">
+          </div>
+          <div class="control-group">
+            <label for="unit">Unit</label>
+            <select id="unit">
+              <option value="mi">miles</option>
+              <option value="km">km</option>
+            </select>
+          </div>
+          <button class="btn" id="generate">
+            <span class="btn-text">Generate Paces</span>
+            <span class="btn-arrow">&rarr;</span>
+          </button>
         </div>
-        <div class="control-group">
-          <label for="unit">Unit</label>
-          <select id="unit">
-            <option value="mi">miles</option>
-            <option value="km">km</option>
-          </select>
+        <div class="controls-bottom">
+          <label class="toggle-label" for="skip-pm">
+            <input type="checkbox" id="skip-pm">
+            <span class="toggle-switch"></span>
+            <span class="toggle-text">Skip PM sessions — I have a life</span>
+          </label>
         </div>
-        <button class="btn" id="generate">
-          <span class="btn-text">Generate Paces</span>
-          <span class="btn-arrow">&rarr;</span>
-        </button>
       </div>
+      <div class="skip-pm-message" id="skip-pm-message"></div>
     </section>
 
     <div id="disclaimer"></div>

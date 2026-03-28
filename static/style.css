@@ -97,22 +97,37 @@ body {
 
 .input-section {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 1.5rem 0 1rem;
 }
 
 .controls {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 0.75rem;
-  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1.25rem 1.5rem 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
 }
 
-.controls label {
+.controls-top {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.controls-bottom {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.85rem;
+  margin-top: 0.85rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.controls-top label {
   display: block;
   font-size: 0.65rem;
   color: var(--text-muted);
@@ -122,8 +137,8 @@ body {
   font-weight: 600;
 }
 
-.controls input,
-.controls select {
+.controls-top input,
+.controls-top select {
   font-family: var(--mono);
   font-size: 0.95rem;
   font-weight: 500;
@@ -135,14 +150,14 @@ body {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.controls input:focus,
-.controls select:focus {
+.controls-top input:focus,
+.controls-top select:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.1);
 }
 
-.controls input[type="text"] {
+.controls-top input[type="text"] {
   width: 7.5rem;
   text-align: center;
 }
@@ -185,6 +200,116 @@ body {
 
 .btn:hover .btn-arrow {
   transform: translateX(2px);
+}
+
+/* -- Toggle -- */
+
+.toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-label input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 2.25rem;
+  height: 1.25rem;
+  background: var(--border);
+  border-radius: 99px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: 2.5px;
+  left: 2.5px;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: var(--surface);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+
+.toggle-label input:checked + .toggle-switch {
+  background: var(--accent);
+}
+
+.toggle-label input:checked + .toggle-switch::after {
+  transform: translateX(1rem);
+}
+
+.toggle-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.skip-pm-message {
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 0;
+}
+
+.skip-pm-card {
+  position: relative;
+  display: inline-block;
+  margin: 0.75rem 0 0;
+  padding: 1rem 2.25rem 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  text-align: left;
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  color: #14532d;
+  animation: fadeSlideIn 0.3s ease;
+}
+
+.skip-pm-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #14532d;
+  opacity: 0.5;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity 0.15s, background 0.15s;
+  line-height: 1;
+}
+
+.skip-pm-close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.skip-pm-card.fading {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-6px); }
 }
 
 /* -- Disclaimer -- */
@@ -649,15 +774,18 @@ body {
   .header h1 { font-size: 1.75rem; }
 
   .controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.6rem;
     width: 100%;
     max-width: 22rem;
     padding: 1.25rem;
   }
 
-  .controls input[type="text"] {
+  .controls-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .controls-top input[type="text"] {
     width: 100%;
   }
 
