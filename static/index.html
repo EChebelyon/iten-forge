@@ -4,33 +4,66 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Iten Forge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="header">
-    <h1>Iten Forge</h1>
-    <p>Forged in the City of Champions</p>
-  </div>
+  <div class="container">
+    <header class="header">
+      <div class="header-badge">42.195 km</div>
+      <h1>Iten Forge</h1>
+      <p class="tagline">Forged in the City of Champions</p>
+      <p class="subtitle">Punch in your marathon goal. We'll tell you how fast to run.</p>
+    </header>
 
-  <div class="controls">
-    <div class="control-group">
-      <label for="goal">Goal</label>
-      <input type="text" id="goal" value="2:50:00" placeholder="H:MM:SS">
-    </div>
-    <div class="control-group">
-      <label for="unit">Unit</label>
-      <select id="unit">
-        <option value="mi">mi</option>
-        <option value="km">km</option>
-      </select>
-    </div>
-    <button class="btn" id="generate">Generate</button>
-  </div>
+    <section class="input-section">
+      <div class="controls">
+        <div class="control-group">
+          <label for="goal">Goal Time</label>
+          <input type="text" id="goal" value="2:50:00" placeholder="H:MM:SS">
+        </div>
+        <div class="control-group">
+          <label for="unit">Unit</label>
+          <select id="unit">
+            <option value="mi">miles</option>
+            <option value="km">km</option>
+          </select>
+        </div>
+        <button class="btn" id="generate">
+          <span class="btn-text">Generate Paces</span>
+          <span class="btn-arrow">&rarr;</span>
+        </button>
+      </div>
+    </section>
 
-  <div class="paces" id="paces"></div>
+    <div id="disclaimer"></div>
 
-  <div class="plan" id="plan">
-    <div class="loading">Loading plan...</div>
+    <section class="paces-section" id="paces-section" style="display:none">
+      <h2 class="section-title">Your Pace Zones</h2>
+      <p class="section-subtitle">These are your training paces. Tattoo them on your forearm or, you know, just check back here.</p>
+      <div class="paces" id="paces"></div>
+    </section>
+
+    <section class="mileage-section" id="mileage-section" style="display:none">
+      <h2 class="section-title">12-Week Mileage</h2>
+      <p class="section-subtitle">Estimated weekly volume across all sessions, including doubles.</p>
+      <div class="mileage-chart" id="mileage-chart"></div>
+    </section>
+
+    <section class="plan-section">
+      <div class="plan" id="plan">
+        <div class="loading">Loading plan...</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">Iten Forge</div>
+        <p class="footer-disclaimer"><strong>Real talk:</strong> This is a pace calculator, not a crystal ball. It won't make you faster, prevent injuries, or replace an actual coach. These are <em>general</em> training zones based on math -- your body might have other opinions. Listen to it. We just crunch numbers; the sweat equity is yours.</p>
+      </div>
+    </footer>
   </div>
 
   <script src="/static/app.js"></script>

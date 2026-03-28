@@ -10,11 +10,11 @@ Set your goal time. Every pace, every interval, every long run recalculates. One
 # Install
 poetry install
 
+# Run locally
+make serve
+
 # Run tests
 make test
-
-# Local dev (Postgres + API server)
-make dev
 
 # API is at http://localhost:8000
 ```
@@ -42,7 +42,7 @@ Change the goal, everything repopulates. Works in miles or kilometers.
 
 ## API
 
-All plan endpoints are stateless. Pass your goal as a query parameter:
+All endpoints are stateless. Pass your goal as a query parameter:
 
 ```
 GET /api/plan?goal=3:15:00&unit=km
@@ -51,24 +51,19 @@ GET /api/plan/workout/2026-03-10?goal=2:50:00
 GET /api/plan/week/5?goal=2:50:00
 ```
 
-Journal endpoints (require Postgres):
-
-```
-GET /api/entries?week=5&entry_type=rpe
-GET /api/summary/7
-```
+The `/api/plan` response includes pace zones, estimated weekly mileage, and all 84 days of workouts.
 
 ## Weekly structure
 
-| Day | Session | Icon |
-|-----|---------|------|
-| Monday | Progressive Run | `progressive` |
-| Tuesday | Track Intervals | `track` |
-| Wednesday | Tempo Run | `tempo` |
-| Thursday | Fartlek | `fartlek` |
-| Friday | Easy Run | `easy` |
-| Saturday | Long Run | `long-run` |
-| Sunday | Rest | `rest` |
+| Day | Session |
+|-----|---------|
+| Monday | Progressive Run |
+| Tuesday | Track Intervals |
+| Wednesday | Tempo Run |
+| Thursday | Fartlek |
+| Friday | Easy Run |
+| Saturday | Long Run |
+| Sunday | Rest |
 
 Evening sessions Mon-Fri alternate between recovery runs and weights.
 
@@ -82,31 +77,12 @@ Environment variables (or `.env` file):
 ITEN_FORGE_GOAL_TIME=2:50:00     # Marathon goal (H:MM:SS)
 ITEN_FORGE_START_DATE=2026-03-09  # First day of training
 ITEN_FORGE_UNIT=mi                # "mi" or "km"
-DATABASE_URL=postgresql://...     # For journal features
 ```
-
-See `.env.example` for the full list including Twilio config.
 
 ## Docker
 
 ```bash
-# Full stack (Postgres + API)
 docker compose up --build
-
-# Just build
-docker compose build
-```
-
-## WhatsApp journal
-
-The server doubles as a WhatsApp bot via Twilio webhook. Log RPE, injuries, nutrition, route notes. See `.env.example` for Twilio setup.
-
-Commands: `rpe 7`, `injury left shin`, `fuel 3 gels`, `today`, `tomorrow`, `summary`, `help`
-
-## Garmin export
-
-```bash
-poetry run python garmin/export_garmin_workouts.py > garmin_workouts.json
 ```
 
 ## Project structure
@@ -118,11 +94,8 @@ iten-forge/
     paces.py        Pace zone calculator
     plan.py         12-week plan engine
     server.py       FastAPI server
+  static/           Frontend (HTML/CSS/JS)
   tests/
-  scripts/
-    send_reminder.py  GitHub Actions daily WhatsApp reminder
-  garmin/
-    export_garmin_workouts.py
   pyproject.toml
   Dockerfile
   docker-compose.yml
@@ -133,11 +106,11 @@ iten-forge/
 
 ```bash
 make install    # poetry install
+make serve      # uvicorn with hot reload
 make test       # pytest
 make lint       # ruff check
 make format     # ruff format
-make dev        # docker compose up
-make clean      # tear down + cleanup
+make clean      # cleanup
 ```
 
 ## License

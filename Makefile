@@ -1,4 +1,4 @@
-.PHONY: install serve start down test lint format build tunnel clean
+.PHONY: install serve start down test lint format build clean
 
 install:
 	@poetry shell
@@ -25,10 +25,7 @@ format:
 build:
 	@docker compose build
 
-tunnel:
-	@ngrok http 8000
-
 clean:
-	@docker compose down -v
+	@docker compose down
 	@find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	@find . -type d -name .pytest_cache -exec rm -rf {} + 2>/dev/null || true

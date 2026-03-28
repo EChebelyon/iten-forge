@@ -5,9 +5,109 @@ const goalInput = document.getElementById("goal");
 const unitSelect = document.getElementById("unit");
 const generateBtn = document.getElementById("generate");
 const pacesEl = document.getElementById("paces");
+const pacesSectionEl = document.getElementById("paces-section");
 const planEl = document.getElementById("plan");
+const disclaimerEl = document.getElementById("disclaimer");
+const mileageSectionEl = document.getElementById("mileage-section");
+const mileageChartEl = document.getElementById("mileage-chart");
 
 const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+// -- Disclaimers --
+
+function goalToSeconds(goal) {
+  const parts = goal.split(":").map(Number);
+  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  if (parts.length === 2) return parts[0] * 60 + parts[1];
+  return 0;
+}
+
+function getDisclaimer(goal) {
+  const secs = goalToSeconds(goal);
+  if (secs <= 0) return null;
+
+  const hours = secs / 3600;
+
+  if (hours < 2.5) {
+    return {
+      tone: "spicy",
+      text: "<strong>Sub 2:30? OK, Kipchoge.</strong> This is elite-level territory — we're talking years of high-mileage training, peak weeks around 95 miles, a VO2max that would impress a lab tech, and a pain tolerance that borders on spiritual. If you're not already comfortably running 80+ mile weeks, maybe add a few minutes to that goal. Just a thought.",
+    };
+  }
+  if (hours < 2.75) {
+    return {
+      tone: "spicy",
+      text: "<strong>Sub 2:45 is seriously fast.</strong> This plan peaks around 90 mile weeks. You'll need a well-tuned fueling strategy and the kind of discipline that makes your friends worry about you. If you can already run a 1:18 half in your sleep, carry on. Otherwise, no shame in dialing it back a notch.",
+    };
+  }
+  if (hours < 3) {
+    return {
+      tone: "spicy",
+      text: "<strong>Sub-3 — the white whale of recreational marathoning.</strong> You're looking at peak weeks in the mid-80s. This takes real commitment: structured speedwork, long runs that eat your Saturday mornings, and the willingness to become the person who talks about \"easy pace\" at dinner parties. You've been warned.",
+    };
+  }
+  if (hours < 3.25) {
+    return {
+      tone: "warm",
+      text: "<strong>Sub-3:15 is no joke.</strong> You're faster than ~95% of marathon finishers. Peak weeks will hit the low 80s — this needs a solid training block, smart pacing, and a healthy respect for the wall at mile 20.",
+    };
+  }
+  if (hours < 3.5) {
+    return {
+      tone: "warm",
+      text: "<strong>A solid, ambitious goal.</strong> Peak weeks around 75–80 miles. You'll want a good base behind you and a healthy respect for the taper. The hay is in the barn — trust the process and don't do anything weird on race week.",
+    };
+  }
+  if (hours < 4) {
+    return {
+      tone: "chill",
+      text: "<strong>Very achievable with consistent training.</strong> Peak mileage lands around 70–75 miles per week. Show up, do the work, and race day will take care of itself. The biggest risk is going out too fast — trust these paces.",
+    };
+  }
+  return {
+    tone: "chill",
+    text: "<strong>Every finish line is a victory lap.</strong> Peak weeks around 70 miles. Train smart, stay consistent, and enjoy the journey. The marathon doesn't care about your pace — it only cares that you finish.",
+  };
+}
+
+function renderDisclaimer(goal) {
+  const d = getDisclaimer(goal);
+  if (!d) {
+    disclaimerEl.innerHTML = "";
+    return;
+  }
+  disclaimerEl.innerHTML = `<div class="disclaimer-card ${d.tone}">${d.text}</div>`;
+}
+
+// -- Mileage chart --
+
+function renderMileageChart(mileage, unit) {
+  const maxMileage = Math.max(...mileage.map((w) => w.mileage));
+  const unitLabel = unit === "mi" ? "mi" : "km";
+
+  const phaseColor = {
+    Build: "var(--green)",
+    Peak: "var(--accent)",
+    Taper: "var(--sand)",
+  };
+
+  mileageChartEl.innerHTML = mileage
+    .map((w) => {
+      const pct = Math.round((w.mileage / maxMileage) * 100);
+      const color = phaseColor[w.phase] || "var(--text-muted)";
+      return `
+        <div class="chart-bar-group">
+          <div class="chart-value">${w.mileage}</div>
+          <div class="chart-bar-area">
+            <div class="chart-bar" style="height:${pct}%; background:${color}"></div>
+          </div>
+          <div class="chart-label">W${w.week}</div>
+        </div>`;
+    })
+    .join("");
+
+  mileageSectionEl.style.display = "block";
+}
 
 // -- Icon cache --
 
@@ -34,12 +134,18 @@ async function fetchPlan() {
 
   planEl.innerHTML = '<div class="loading">Loading plan...</div>';
   pacesEl.innerHTML = "";
+  pacesSectionEl.style.display = "none";
+  mileageSectionEl.style.display = "none";
+
+  renderDisclaimer(goal);
 
   try {
     const resp = await fetch(`${API}?goal=${encodeURIComponent(goal)}&unit=${unit}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
     renderPaces(data.paces);
+    pacesSectionEl.style.display = "block";
+    if (data.mileage) renderMileageChart(data.mileage, unit);
     await renderPlan(data.workouts);
   } catch (err) {
     planEl.innerHTML = `<div class="loading">Failed to load plan: ${err.message}</div>`;
@@ -64,11 +170,9 @@ function renderPaces(paces) {
 // -- Render plan --
 
 async function renderPlan(workouts) {
-  // Preload all icons
   const iconNames = [...new Set(workouts.map((w) => w.icon))];
   await Promise.all(iconNames.map(loadIcon));
 
-  // Group by week
   const weeks = {};
   for (const w of workouts) {
     if (!weeks[w.week]) weeks[w.week] = { phase: w.phase, days: [] };
@@ -99,7 +203,6 @@ async function renderPlan(workouts) {
 
   planEl.innerHTML = html;
 
-  // Auto-show first day of week 1
   const firstCard = planEl.querySelector('.day-card[data-week="1"]');
   if (firstCard) showDetail(firstCard, workouts[0]);
 }
@@ -125,7 +228,6 @@ function toggleWeek(header) {
 }
 
 function selectDay(card, workout) {
-  // Deactivate siblings
   const grid = card.parentElement;
   grid.querySelectorAll(".day-card").forEach((c) => c.classList.remove("active"));
   card.classList.add("active");

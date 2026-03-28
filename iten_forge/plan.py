@@ -73,6 +73,76 @@ class Plan:
                 workouts.append(w)
         return workouts
 
+    def weekly_mileage(self) -> list[dict]:
+        """Estimated weekly mileage for weeks 1-12.
+
+        Time-based workouts are converted to distance using the
+        appropriate training pace.  Saturday long runs use the
+        explicit km distance.  Evening recovery doubles are included.
+        """
+        km_per_mile = 1.60934
+        results = []
+
+        for week in range(1, 13):
+            total_km = 0.0
+
+            # Monday – progressive (use easy pace as rough average)
+            mon_dur = {1: 60, 2: 60, 3: 65, 4: 65, 5: 65, 6: 70, 7: 70, 8: 70, 9: 65, 10: 60, 11: 50, 12: 40}
+            pace_sec_per_km = self.paces.marathon + round(80 * self.paces._scale)  # between easy and marathon
+            if self.paces.unit == "mi":
+                pace_sec_per_km = pace_sec_per_km / km_per_mile
+            total_km += mon_dur[week] * 60 / pace_sec_per_km
+
+            # Tuesday – track: 15 warm + reps*(~4min) + 10 cool at easy, reps*1km at 5k pace
+            tue_reps = {1: 5, 2: 6, 3: 7, 4: 8, 5: 9, 6: 10, 7: 10, 8: 10, 9: 10, 10: 8, 11: 6, 12: 4}
+            easy_sec_per_km = self.paces.easy / km_per_mile if self.paces.unit == "mi" else self.paces.easy
+            easy_mins = 25  # warmup + cooldown
+            total_km += easy_mins * 60 / easy_sec_per_km
+            total_km += tue_reps[week]  # 1km per rep
+            recovery_jog_km = tue_reps[week] * 0.3  # ~300m jog between reps
+            total_km += recovery_jog_km
+
+            # Wednesday – tempo
+            wed_dur = {1: 50, 2: 55, 3: 60, 4: 65, 5: 70, 6: 75, 7: 80, 8: 75, 9: 70, 10: 60, 11: 45, 12: 30}
+            tempo_sec_per_km = self.paces.tempo / km_per_mile if self.paces.unit == "mi" else self.paces.tempo
+            avg_wed = (easy_sec_per_km * 0.4 + tempo_sec_per_km * 0.6)
+            total_km += wed_dur[week] * 60 / avg_wed
+
+            # Thursday – fartlek
+            thu_reps = {1: 5, 2: 6, 3: 8, 4: 10, 5: 12, 6: 13, 7: 15, 8: 15, 9: 13, 10: 10, 11: 7, 12: 4}
+            thu_dur = thu_reps[week] * 4 + 25
+            thresh_sec_per_km = self.paces.threshold / km_per_mile if self.paces.unit == "mi" else self.paces.threshold
+            avg_thu = (easy_sec_per_km * 0.4 + thresh_sec_per_km * 0.6)
+            total_km += thu_dur * 60 / avg_thu
+
+            # Friday – easy
+            fri_dur = {1: 50, 2: 55, 3: 60, 4: 65, 5: 70, 6: 75, 7: 80, 8: 75, 9: 70, 10: 60, 11: 45, 12: 30}
+            total_km += fri_dur[week] * 60 / easy_sec_per_km
+
+            # Saturday – long run (explicit km)
+            lr_km = {1: 25, 2: 28, 3: 30, 4: 32, 5: 34, 6: 35, 7: 38, 8: 40, 9: 35, 10: 30, 11: 22, 12: 10}
+            total_km += lr_km[week]
+
+            # Evening recovery doubles (Mon/Wed/Fri = 3x 40min, except week 12 after Wed)
+            rec_sec_per_km = self.paces.recovery / km_per_mile if self.paces.unit == "mi" else self.paces.recovery
+            if week < 12:
+                total_km += 3 * 40 * 60 / rec_sec_per_km
+            else:
+                total_km += 2 * 40 * 60 / rec_sec_per_km  # only Mon & Wed evenings
+
+            if self.unit == "mi":
+                total_dist = round(total_km / km_per_mile, 1)
+            else:
+                total_dist = round(total_km, 1)
+
+            results.append({
+                "week": week,
+                "phase": self.phase(week),
+                "mileage": total_dist,
+            })
+
+        return results
+
     def format_message(self, workout: dict | None) -> str:
         if workout is None:
             return "No workout scheduled for this date."

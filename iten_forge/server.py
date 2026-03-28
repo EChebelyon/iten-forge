@@ -57,6 +57,7 @@ def get_plan(goal: str = GOAL_TIME, unit: str = UNIT):
         "start_date": plan.start_date.isoformat(),
         "race_day": plan.race_day.isoformat(),
         "paces": plan.paces.all_zones(),
+        "mileage": plan.weekly_mileage(),
         "workouts": plan.all_workouts(),
     }
 
