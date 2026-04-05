@@ -60,6 +60,7 @@ class Plan:
             "summary": w["summary"],
             "details": w["details"],
             "garmin_steps": w.get("garmin_steps", []),
+            "alt": w.get("alt"),
             "evening": evening,
             "paces": self.paces.all_zones(),
         }
@@ -229,6 +230,44 @@ class Plan:
                     for _ in range(r)
                     for step in [
                         {"type": "interval", "distance_m": 1000, "target": pace_5k},
+                        {"type": "recovery", "duration_sec": recovery_sec, "target": "jog"},
+                    ]
+                ],
+                {"type": "cooldown", "duration_min": 10, "target": pace_easy},
+            ],
+            "alt": self._tuesday_road(week),
+        }
+
+    def _tuesday_road(self, week: int) -> dict:
+        """Road-based speed session for runners without track access."""
+        reps = {1: 5, 2: 6, 3: 7, 4: 8, 5: 9, 6: 10, 7: 10, 8: 10, 9: 10, 10: 8, 11: 6, 12: 4}
+        r = reps[week]
+        recovery_sec = 90 if week <= 4 or week >= 10 else 75
+        recovery_str = f"{recovery_sec}s" if recovery_sec < 120 else f"{recovery_sec // 60} min"
+        # ~3:30-4:00 hard effort approximates 1000m at 5K pace
+        interval_min = 4 if week <= 4 or week >= 10 else 3.5
+        interval_str = f"{int(interval_min)} min" if interval_min == int(interval_min) else f"{int(interval_min)}:{int((interval_min % 1) * 60):02d}"
+        pace_5k = self.paces.format("5k")
+        pace_easy = self.paces.format("easy")
+
+        return {
+            "icon": "fartlek",
+            "title": "Road Intervals",
+            "duration": "~70-80 min",
+            "summary": f"{r} x {interval_str} hard @ {pace_5k} ({recovery_str} jog recovery)",
+            "details": (
+                f"No track? No problem. Warm up 15 min easy + 4 strides. "
+                f"{r} x {interval_str} at 5K effort ({pace_5k}), {recovery_str} easy jog between. "
+                f"Use a flat stretch of road or path — lamp posts, blocks, whatever works. "
+                f"Cool down 10 min. Same stimulus, different scenery."
+            ),
+            "garmin_steps": [
+                {"type": "warmup", "duration_min": 15, "target": pace_easy},
+                *[
+                    step
+                    for _ in range(r)
+                    for step in [
+                        {"type": "interval", "duration_sec": int(interval_min * 60), "target": pace_5k},
                         {"type": "recovery", "duration_sec": recovery_sec, "target": "jog"},
                     ]
                 ],

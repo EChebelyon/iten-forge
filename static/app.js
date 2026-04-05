@@ -5,6 +5,7 @@ const goalInput = document.getElementById("goal");
 const unitSelect = document.getElementById("unit");
 const generateBtn = document.getElementById("generate");
 const skipPmCheckbox = document.getElementById("skip-pm");
+const noTrackCheckbox = document.getElementById("no-track");
 const skipPmMessageEl = document.getElementById("skip-pm-message");
 const pacesEl = document.getElementById("paces");
 const pacesSectionEl = document.getElementById("paces-section");
@@ -203,9 +204,18 @@ async function fetchPlan() {
 function renderWithPmToggle() {
   if (!lastPlanData) return;
   const skipPm = skipPmCheckbox.checked;
+  const noTrack = noTrackCheckbox.checked;
   const unit = unitSelect.value;
 
   let workouts = lastPlanData.workouts;
+  if (noTrack) {
+    workouts = workouts.map((w) => {
+      if (w.alt) {
+        return { ...w, icon: w.alt.icon, title: w.alt.title, duration: w.alt.duration, summary: w.alt.summary, details: w.alt.details, garmin_steps: w.alt.garmin_steps };
+      }
+      return w;
+    });
+  }
   if (skipPm) {
     workouts = workouts.map((w) => ({ ...w, evening: w.evening?.title?.includes("Recovery") ? null : w.evening }));
   }
@@ -380,6 +390,10 @@ goalInput.addEventListener("keydown", (e) => {
 
 skipPmCheckbox.addEventListener("change", () => {
   renderSkipPmMessage(skipPmCheckbox.checked);
+  renderWithPmToggle();
+});
+
+noTrackCheckbox.addEventListener("change", () => {
   renderWithPmToggle();
 });
 

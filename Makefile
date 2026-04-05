@@ -1,4 +1,4 @@
-.PHONY: install serve start down test lint format build clean
+.PHONY: install serve start stop test lint format build clean
 
 install:
 	@poetry shell
@@ -10,7 +10,7 @@ serve:
 start:
 	@docker compose up -d --build
 
-down:
+stop:
 	@docker compose down
 
 test:
