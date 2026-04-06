@@ -16,15 +16,26 @@
       <div class="header-badge">42.195 km</div>
       <h1>Iten Forge</h1>
       <p class="tagline">Forged in the City of Champions</p>
-      <p class="subtitle">Punch in your marathon goal. We'll tell you how fast to run.</p>
+      <p class="subtitle">Enter your goal time. We'll build your plan.</p>
     </header>
+
+    <section class="about-section" id="about-section">
+      <p class="about-text">Every morning at 6am in Iten, Kenya -- 2,400 metres above sea level -- the world's fastest distance runners lace up and head out into the red-dirt roads of the Rift Valley. No GPS watches, no spreadsheets, no overthinking. Just decades of accumulated wisdom, baked into a rhythm: hard days hard, easy days easy, long run Saturday, rest Sunday.</p>
+      <p class="about-text">This tool distils that philosophy into a 12-week marathon plan built around <em>your</em> goal time. Whether you're chasing a BQ or just trying to cross the finish line without walking through a McDonald's drive-through at mile 22 -- punch in your time and we'll do the math. You do the running.</p>
+    </section>
 
     <section class="input-section">
       <div class="controls">
         <div class="controls-top">
           <div class="control-group">
-            <label for="goal">Goal Time</label>
-            <input type="text" id="goal" value="2:50:00" placeholder="H:MM:SS">
+            <label>Goal Time</label>
+            <div class="time-input" id="time-input">
+              <input type="number" id="goal-h" min="2" max="7" placeholder="H" class="time-field time-h" aria-label="Hours">
+              <span class="time-sep">:</span>
+              <input type="number" id="goal-m" min="0" max="59" placeholder="MM" class="time-field time-mm" aria-label="Minutes">
+              <span class="time-sep">:</span>
+              <input type="number" id="goal-s" min="0" max="59" placeholder="SS" class="time-field time-ss" aria-label="Seconds">
+            </div>
           </div>
           <div class="control-group">
             <label for="unit">Unit</label>
@@ -34,7 +45,7 @@
             </select>
           </div>
           <button class="btn" id="generate">
-            <span class="btn-text">Generate Paces</span>
+            <span class="btn-text">Generate Plan</span>
             <span class="btn-arrow">&rarr;</span>
           </button>
         </div>
@@ -64,7 +75,7 @@
 
     <section class="mileage-section" id="mileage-section" style="display:none">
       <h2 class="section-title">12-Week Mileage</h2>
-      <p class="section-subtitle">Estimated weekly volume across all sessions, including doubles.</p>
+      <p class="section-subtitle" id="mileage-subtitle">Estimated weekly volume across all sessions, including doubles.</p>
       <div class="mileage-chart" id="mileage-chart"></div>
     </section>
 

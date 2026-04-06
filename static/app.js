@@ -1,18 +1,26 @@
 const API = "/api/plan";
 const ICON_PATH = "/static/icons";
 
-const goalInput = document.getElementById("goal");
+const goalH = document.getElementById("goal-h");
+const goalM = document.getElementById("goal-m");
+const goalS = document.getElementById("goal-s");
 const unitSelect = document.getElementById("unit");
 const generateBtn = document.getElementById("generate");
 const skipPmCheckbox = document.getElementById("skip-pm");
 const noTrackCheckbox = document.getElementById("no-track");
+const skipPmLabel = skipPmCheckbox.closest(".toggle-label");
+const noTrackLabel = noTrackCheckbox.closest(".toggle-label");
 const skipPmMessageEl = document.getElementById("skip-pm-message");
+const aboutSectionEl = document.getElementById("about-section");
 const pacesEl = document.getElementById("paces");
 const pacesSectionEl = document.getElementById("paces-section");
 const planEl = document.getElementById("plan");
 const disclaimerEl = document.getElementById("disclaimer");
 const mileageSectionEl = document.getElementById("mileage-section");
 const mileageChartEl = document.getElementById("mileage-chart");
+const mileageSubtitleEl = document.getElementById("mileage-subtitle");
+
+const WORLD_RECORD_SECS = 2 * 3600 + 0 * 60 + 40; // 2:00:40
 
 const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -64,6 +72,14 @@ function renderSkipPmMessage(show) {
 
 // -- Disclaimers --
 
+function getGoalString() {
+  const h = goalH.value.trim();
+  const m = goalM.value.trim();
+  const s = goalS.value.trim();
+  if (!h && !m && !s) return "";
+  return `${h || "0"}:${(m || "0").padStart(2, "0")}:${(s || "0").padStart(2, "0")}`;
+}
+
 function goalToSeconds(goal) {
   const parts = goal.split(":").map(Number);
   if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
@@ -71,11 +87,34 @@ function goalToSeconds(goal) {
   return 0;
 }
 
-function getDisclaimer(goal) {
-  const secs = goalToSeconds(goal);
+function getDisclaimer(secs) {
   if (secs <= 0) return null;
 
   const hours = secs / 3600;
+
+  // Below world record — you're not Kelvin Kiptum
+  if (secs < WORLD_RECORD_SECS) {
+    return {
+      tone: "spicy",
+      text: "<strong>Hold on.</strong> That's faster than the world record (2:00:40, Kelvin Kiptum, Chicago 2023). Unless you're a time traveller from a future where humans have extra tendons, we're going to need you to add a few minutes. We believe in you — just not <em>that</em> much.",
+    };
+  }
+
+  // Sub-2:05 — comical territory
+  if (hours < 2 + 5 / 60) {
+    const msgs = [
+      "<strong>Sub 2:05? Sure, and I'm Eliud Kipchoge's pacemaker.</strong> There are maybe 15 people alive who can do this, and they all live at altitude, eat ugali three times a day, and haven't sat in an office chair since 2007. But hey — if you've got a VO2max north of 85 and your resting heart rate is \"basically dead,\" who are we to judge? Let's see those paces.",
+      "<strong>Are you... are you Kelvin Kiptum?</strong> Because sub-2:05 is not a goal, it's a press conference. You'd need to average under 4:44/mi for 26.2 miles. Most people can't hold that pace for a single mile. On a bike. Downhill. But if you insist, we'll crunch the numbers. Just know the math is judging you.",
+      "<strong>We ran the numbers. The numbers ran away.</strong> Sub-2:05 puts you in a group so small they could share a matatu in Eldoret. This isn't a training plan, it's a scientific experiment. You'll need to run every interval like a cheetah who's late for a meeting. We'll generate the paces, but we're doing it with one eyebrow raised.",
+    ];
+    return {
+      tone: "spicy",
+      text: msgs[Math.floor(Math.random() * msgs.length)],
+    };
+  }
+
+  // 3:30+ is the default "Just Finish" plan — no disclaimer needed
+  if (hours >= 3.5) return null;
 
   if (hours < 2.5) {
     return {
@@ -101,26 +140,14 @@ function getDisclaimer(goal) {
       text: "<strong>Sub-3:15 is no joke.</strong> You're faster than ~95% of marathon finishers. Peak weeks will hit the low 80s — this needs a solid training block, smart pacing, and a healthy respect for the wall at mile 20.",
     };
   }
-  if (hours < 3.5) {
-    return {
-      tone: "warm",
-      text: "<strong>A solid, ambitious goal.</strong> Peak weeks around 75–80 miles. You'll want a good base behind you and a healthy respect for the taper. The hay is in the barn — trust the process and don't do anything weird on race week.",
-    };
-  }
-  if (hours < 4) {
-    return {
-      tone: "chill",
-      text: "<strong>Very achievable with consistent training.</strong> Peak mileage lands around 70–75 miles per week. Show up, do the work, and race day will take care of itself. The biggest risk is going out too fast — trust these paces.",
-    };
-  }
   return {
-    tone: "chill",
-    text: "<strong>Every finish line is a victory lap.</strong> Peak weeks around 70 miles. Train smart, stay consistent, and enjoy the journey. The marathon doesn't care about your pace — it only cares that you finish.",
+    tone: "warm",
+    text: "<strong>You're entering competitive territory.</strong> Sub-3:30 unlocks the full program — track intervals, tempo runs, fartlek sessions, and PM doubles. Peak weeks push into the 70–80 mile range. This is a serious training block built for experienced runners. If that sounds like you, let's go.",
   };
 }
 
-function renderDisclaimer(goal) {
-  const d = getDisclaimer(goal);
+function renderDisclaimer(secs) {
+  const d = getDisclaimer(secs);
   if (!d) {
     disclaimerEl.innerHTML = "";
     return;
@@ -177,16 +204,51 @@ async function loadIcon(name) {
 
 // -- Fetch plan --
 
+function resetToEmpty() {
+  lastPlanData = null;
+  planEl.innerHTML = '<div class="loading">Enter your goal time above to get started.</div>';
+  pacesEl.innerHTML = "";
+  pacesSectionEl.style.display = "none";
+  mileageSectionEl.style.display = "none";
+  disclaimerEl.innerHTML = "";
+  aboutSectionEl.style.display = "";
+  skipPmLabel.style.display = "none";
+  noTrackLabel.style.display = "none";
+  skipPmCheckbox.checked = false;
+  noTrackCheckbox.checked = false;
+  dismissSkipPmMessage();
+}
+
 async function fetchPlan() {
-  const goal = goalInput.value.trim();
+  const goal = getGoalString();
   const unit = unitSelect.value;
+
+  if (!goal || goal === "0:00:00") {
+    resetToEmpty();
+    return;
+  }
+
+  const secs = goalToSeconds(goal);
+
+  // Below world record — show disclaimer but don't generate
+  if (secs < WORLD_RECORD_SECS) {
+    renderDisclaimer(secs);
+    lastPlanData = null;
+    planEl.innerHTML = "";
+    pacesEl.innerHTML = "";
+    pacesSectionEl.style.display = "none";
+    mileageSectionEl.style.display = "none";
+    aboutSectionEl.style.display = "none";
+    return;
+  }
 
   planEl.innerHTML = '<div class="loading">Loading plan...</div>';
   pacesEl.innerHTML = "";
   pacesSectionEl.style.display = "none";
   mileageSectionEl.style.display = "none";
+  aboutSectionEl.style.display = "none";
 
-  renderDisclaimer(goal);
+  renderDisclaimer(secs);
 
   try {
     const resp = await fetch(`${API}?goal=${encodeURIComponent(goal)}&unit=${unit}`);
@@ -195,6 +257,20 @@ async function fetchPlan() {
     lastPlanData = data;
     renderPaces(data.paces);
     pacesSectionEl.style.display = "block";
+
+    const isCompetitive = data.tier === "competitive";
+    skipPmLabel.style.display = isCompetitive ? "" : "none";
+    noTrackLabel.style.display = isCompetitive ? "" : "none";
+    if (!isCompetitive) {
+      skipPmCheckbox.checked = false;
+      noTrackCheckbox.checked = false;
+      dismissSkipPmMessage();
+    }
+
+    mileageSubtitleEl.textContent = isCompetitive
+      ? "Estimated weekly volume across all sessions, including doubles."
+      : "Estimated weekly volume. Consistency beats mileage.";
+
     renderWithPmToggle();
   } catch (err) {
     planEl.innerHTML = `<div class="loading">Failed to load plan: ${err.message}</div>`;
@@ -381,11 +457,48 @@ function garminStep(step) {
   return `<span class="garmin-step ${cls}">${label}</span>`;
 }
 
+// -- Time input helpers --
+
+function autoAdvance(current, next) {
+  current.addEventListener("input", () => {
+    const val = current.value;
+    if (val.length >= 2 && next) next.focus();
+  });
+}
+
+autoAdvance(goalH, goalM);
+autoAdvance(goalM, goalS);
+
+// Clamp values on blur
+[goalH, goalM, goalS].forEach((field) => {
+  field.addEventListener("blur", () => {
+    const min = parseInt(field.min) || 0;
+    const max = parseInt(field.max) || 59;
+    let val = parseInt(field.value);
+    if (isNaN(val)) { field.value = ""; return; }
+    if (val < min) val = min;
+    if (val > max) val = max;
+    field.value = field === goalH ? val : String(val).padStart(2, "0");
+  });
+});
+
+// Reactive: if all fields are cleared, reset to empty state
+[goalH, goalM, goalS].forEach((field) => {
+  field.addEventListener("input", () => {
+    if (!goalH.value && !goalM.value && !goalS.value) {
+      resetToEmpty();
+    }
+  });
+});
+
 // -- Init --
 
 generateBtn.addEventListener("click", fetchPlan);
-goalInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") fetchPlan();
+
+[goalH, goalM, goalS].forEach((field) => {
+  field.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") fetchPlan();
+  });
 });
 
 skipPmCheckbox.addEventListener("change", () => {
@@ -397,4 +510,5 @@ noTrackCheckbox.addEventListener("change", () => {
   renderWithPmToggle();
 });
 
-fetchPlan();
+// Show empty state on load
+resetToEmpty();

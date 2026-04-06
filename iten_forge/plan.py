@@ -3,6 +3,10 @@
 
 All paces are dynamically computed from the athlete's goal time.
 Workout structure is periodized: Build (weeks 1-4), Peak (5-9), Taper (10-12).
+
+Two tiers:
+  - Competitive (sub-3:30): High mileage, structured speedwork, doubles.
+  - Just Finish (3:30+): Moderate mileage, easy runs, no doubles.
 """
 
 from datetime import date, timedelta
@@ -11,6 +15,8 @@ from iten_forge.paces import PaceZones, format_pace
 
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
+COMPETITIVE_CUTOFF = 3 * 3600 + 30 * 60  # 3:30:00
+
 
 class Plan:
     def __init__(self, goal_time: str, start_date: date, unit: str = "mi"):
@@ -18,6 +24,10 @@ class Plan:
         self.start_date = start_date
         self.race_day = start_date + timedelta(weeks=12)
         self.unit = unit
+
+    @property
+    def is_competitive(self) -> bool:
+        return self.paces.goal_seconds < COMPETITIVE_CUTOFF
 
     def phase(self, week: int) -> str:
         if week <= 4:
@@ -37,15 +47,26 @@ class Plan:
         if week == 0:
             return None
 
-        builders = [
-            self._monday,
-            self._tuesday,
-            self._wednesday,
-            self._thursday,
-            self._friday,
-            self._saturday,
-            self._sunday,
-        ]
+        if self.is_competitive:
+            builders = [
+                self._monday,
+                self._tuesday,
+                self._wednesday,
+                self._thursday,
+                self._friday,
+                self._saturday,
+                self._sunday,
+            ]
+        else:
+            builders = [
+                self._jf_monday,
+                self._jf_tuesday,
+                self._jf_wednesday,
+                self._sunday,       # Thursday = rest
+                self._jf_friday,
+                self._jf_saturday,
+                self._sunday,
+            ]
         w = builders[day](week)
         evening = self._evening(week, day)
 
@@ -75,12 +96,13 @@ class Plan:
         return workouts
 
     def weekly_mileage(self) -> list[dict]:
-        """Estimated weekly mileage for weeks 1-12.
+        """Estimated weekly mileage for weeks 1-12."""
+        if self.is_competitive:
+            return self._competitive_mileage()
+        return self._jf_mileage()
 
-        Time-based workouts are converted to distance using the
-        appropriate training pace.  Saturday long runs use the
-        explicit km distance.  Evening recovery doubles are included.
-        """
+    def _competitive_mileage(self) -> list[dict]:
+        """Competitive tier: high mileage with doubles."""
         km_per_mile = 1.60934
         results = []
 
@@ -130,6 +152,46 @@ class Plan:
                 total_km += 3 * 40 * 60 / rec_sec_per_km
             else:
                 total_km += 2 * 40 * 60 / rec_sec_per_km  # only Mon & Wed evenings
+
+            if self.unit == "mi":
+                total_dist = round(total_km / km_per_mile, 1)
+            else:
+                total_dist = round(total_km, 1)
+
+            results.append({
+                "week": week,
+                "phase": self.phase(week),
+                "mileage": total_dist,
+            })
+
+        return results
+
+    def _jf_mileage(self) -> list[dict]:
+        """Just Finish tier: moderate mileage, no doubles."""
+        km_per_mile = 1.60934
+        easy_sec_per_km = self.paces.easy / km_per_mile if self.paces.unit == "mi" else self.paces.easy
+        results = []
+
+        mon_dur = {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 45, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25}
+        tue_dur = {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 40, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 20}
+        wed_dur = {1: 35, 2: 35, 3: 40, 4: 40, 5: 45, 6: 50, 7: 50, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25}
+        fri_dur = {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 35, 9: 30, 10: 30, 11: 25, 12: 20}
+        lr_km = {1: 14, 2: 16, 3: 18, 4: 20, 5: 22, 6: 25, 7: 28, 8: 32, 9: 28, 10: 22, 11: 16, 12: 10}
+
+        for week in range(1, 13):
+            total_km = 0.0
+
+            # Mon, Tue, Fri — all easy pace
+            for dur in [mon_dur[week], tue_dur[week], fri_dur[week]]:
+                total_km += dur * 60 / easy_sec_per_km
+
+            # Wed — steady (slightly faster than easy, approximate)
+            total_km += wed_dur[week] * 60 / (easy_sec_per_km * 0.95)
+
+            # Saturday — long run (explicit km)
+            total_km += lr_km[week]
+
+            # Thursday — rest, Sunday — rest, no doubles
 
             if self.unit == "mi":
                 total_dist = round(total_km / km_per_mile, 1)
@@ -434,6 +496,8 @@ class Plan:
         }
 
     def _evening(self, week: int, day: int) -> dict | None:
+        if not self.is_competitive:
+            return None
         if day >= 5:
             return None
         if week == 12 and day >= 3:
@@ -469,4 +533,126 @@ class Plan:
             "title": "PM Weights",
             "duration": "40 min",
             "description": focus,
+        }
+
+    # -- Just Finish day builders (3:30+ goals) --
+
+    def _jf_monday(self, week: int) -> dict:
+        durations = {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 45, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25}
+        dur = durations[week]
+        pace_easy = self.paces.format("easy")
+
+        return {
+            "icon": "easy",
+            "title": "Easy Run",
+            "duration": f"{dur} min",
+            "summary": f"{dur} min easy @ {pace_easy}",
+            "details": (
+                "Easy, conversational pace. If you can't hold a conversation, slow down. "
+                "This builds your aerobic base without beating you up."
+            ),
+            "garmin_steps": [
+                {"type": "active", "duration_min": dur, "target": pace_easy},
+            ],
+        }
+
+    def _jf_tuesday(self, week: int) -> dict:
+        durations = {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 40, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 20}
+        dur = durations[week]
+        strides = 4 if week <= 6 else 6
+        pace_easy = self.paces.format("easy")
+
+        return {
+            "icon": "easy",
+            "title": "Easy Run + Strides",
+            "duration": f"{dur} min",
+            "summary": f"{dur} min easy with {strides} strides",
+            "details": (
+                f"Run {dur - 5} min easy @ {pace_easy}. "
+                f"Then {strides} x 20-second strides -- smooth accelerations to fast (not sprinting), "
+                f"walk back between. These keep your legs honest without real speedwork."
+            ),
+            "garmin_steps": [
+                {"type": "active", "duration_min": dur - 5, "target": pace_easy},
+                {"type": "cooldown", "duration_min": 5, "target": "strides + walk"},
+            ],
+        }
+
+    def _jf_wednesday(self, week: int) -> dict:
+        durations = {1: 35, 2: 35, 3: 40, 4: 40, 5: 45, 6: 50, 7: 50, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25}
+        dur = durations[week]
+        wu = 10
+        cd = 5
+        steady_min = dur - wu - cd
+        pace_easy = self.paces.format("easy")
+        pace_mp = self.paces.format("marathon")
+
+        return {
+            "icon": "tempo",
+            "title": "Steady Run",
+            "duration": f"{dur} min",
+            "summary": f"{dur} min with {steady_min} min steady between easy and marathon pace",
+            "details": (
+                f"Warm up {wu} min easy. Middle {steady_min} min at a comfortably moderate effort "
+                f"-- somewhere between {pace_easy} and {pace_mp}. "
+                f"Not a tempo, not a race. Just purposeful running. Cool down {cd} min."
+            ),
+            "garmin_steps": [
+                {"type": "warmup", "duration_min": wu, "target": pace_easy},
+                {"type": "active", "duration_min": steady_min, "target": "steady"},
+                {"type": "cooldown", "duration_min": cd, "target": pace_easy},
+            ],
+        }
+
+    def _jf_friday(self, week: int) -> dict:
+        durations = {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 35, 9: 30, 10: 30, 11: 25, 12: 20}
+        dur = durations[week]
+        pace_easy = self.paces.format("easy")
+
+        return {
+            "icon": "easy",
+            "title": "Easy Run",
+            "duration": f"{dur} min",
+            "summary": f"{dur} min easy @ {pace_easy}",
+            "details": (
+                "Short, easy shakeout before tomorrow's long run. "
+                "Keep it light. Flat terrain. No heroics."
+            ),
+            "garmin_steps": [
+                {"type": "active", "duration_min": dur, "target": pace_easy},
+            ],
+        }
+
+    def _jf_saturday(self, week: int) -> dict:
+        pace_easy = self.paces.format("easy")
+        long_runs = {
+            1: {"km": 14, "summary": "14K easy -- just time on your feet"},
+            2: {"km": 16, "summary": "16K easy -- settle into a rhythm"},
+            3: {"km": 18, "summary": "18K easy -- longest yet, stay patient"},
+            4: {"km": 20, "summary": "20K easy -- halfway to race distance"},
+            5: {"km": 22, "summary": "22K easy -- practice fueling"},
+            6: {"km": 25, "summary": "25K easy -- your body is adapting"},
+            7: {"km": 28, "summary": "28K easy -- this is the big one, respect the distance"},
+            8: {"km": 32, "summary": "32K easy -- THE BIG ONE. You can walk if you need to."},
+            9: {"km": 28, "summary": "28K easy -- you've done this before"},
+            10: {"km": 22, "summary": "22K easy -- begin taper, legs may feel weird"},
+            11: {"km": 16, "summary": "16K easy -- trust the training"},
+            12: {"km": 10, "summary": "10K shakeout -- stay loose, stay confident"},
+        }
+        lr = long_runs[week]
+        miles = round(lr["km"] * 0.621, 1)
+
+        return {
+            "icon": "long-run",
+            "title": "Long Run",
+            "duration": f"{lr['km']}K ({miles} mi)",
+            "summary": lr["summary"],
+            "details": (
+                f"All easy pace @ {pace_easy}. Walk breaks are fine. "
+                f"Practice race-day nutrition: take gels every 45 min, hydrate every 20 min. "
+                f"The goal is finishing the distance, not the pace."
+            ),
+            "garmin_steps": [
+                {"type": "active", "distance_km": lr["km"], "target": pace_easy},
+            ],
         }

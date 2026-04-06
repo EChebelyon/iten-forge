@@ -54,6 +54,7 @@ def get_plan(goal: str = GOAL_TIME, unit: str = UNIT):
     return {
         "goal": goal,
         "unit": unit,
+        "tier": "competitive" if plan.is_competitive else "just_finish",
         "start_date": plan.start_date.isoformat(),
         "race_day": plan.race_day.isoformat(),
         "paces": plan.paces.all_zones(),

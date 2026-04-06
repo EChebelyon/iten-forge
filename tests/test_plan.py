@@ -74,12 +74,12 @@ def test_icon_is_semantic_string():
 
 def test_dynamic_paces_change_with_goal():
     fast = Plan(goal_time="2:30:00", start_date=date(2026, 3, 9))
-    slow = Plan(goal_time="4:00:00", start_date=date(2026, 3, 9))
+    slow = Plan(goal_time="3:20:00", start_date=date(2026, 3, 9))
 
     fast_w = fast.workout(date(2026, 3, 9))
     slow_w = slow.workout(date(2026, 3, 9))
 
-    # Same structure, different paces
+    # Both competitive — same structure, different paces
     assert fast_w["title"] == slow_w["title"]
     assert fast_w["paces"]["marathon"] != slow_w["paces"]["marathon"]
 
@@ -106,3 +106,53 @@ def test_evening_sessions():
     # Saturday (day 5) should have no evening
     sat = plan.workout(date(2026, 3, 14))
     assert sat["evening"] is None
+
+
+# -- Just Finish tier --
+
+
+def _jf_plan() -> Plan:
+    return Plan(goal_time="4:00:00", start_date=date(2026, 3, 9), unit="mi")
+
+
+def test_just_finish_tier_detection():
+    assert _plan().is_competitive is True
+    assert _jf_plan().is_competitive is False
+    # Boundary: exactly 3:30 is just finish
+    boundary = Plan(goal_time="3:30:00", start_date=date(2026, 3, 9))
+    assert boundary.is_competitive is False
+
+
+def test_just_finish_all_workouts_count():
+    plan = _jf_plan()
+    assert len(plan.all_workouts()) == 84
+
+
+def test_just_finish_thursday_is_rest():
+    plan = _jf_plan()
+    workouts = plan.all_workouts()
+    thursdays = [w for w in workouts if w["day"] == "Thursday"]
+    assert len(thursdays) == 12
+    assert all(w["title"] == "Rest Day" for w in thursdays)
+
+
+def test_just_finish_no_evening_sessions():
+    plan = _jf_plan()
+    workouts = plan.all_workouts()
+    assert all(w["evening"] is None for w in workouts)
+
+
+def test_just_finish_no_track_icon():
+    plan = _jf_plan()
+    icons = {w["icon"] for w in plan.all_workouts()}
+    assert "track" not in icons
+    assert "progressive" not in icons
+    assert "fartlek" not in icons
+
+
+def test_just_finish_mileage_lower_than_competitive():
+    comp = _plan()
+    jf = _jf_plan()
+    comp_peak = max(w["mileage"] for w in comp.weekly_mileage())
+    jf_peak = max(w["mileage"] for w in jf.weekly_mileage())
+    assert jf_peak < comp_peak
