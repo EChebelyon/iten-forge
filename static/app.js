@@ -6,6 +6,8 @@ const goalM = document.getElementById("goal-m");
 const goalS = document.getElementById("goal-s");
 const unitSelect = document.getElementById("unit");
 const generateBtn = document.getElementById("generate");
+const distanceToggle = document.getElementById("distance-toggle");
+const headerBadge = document.getElementById("header-badge");
 const skipPmCheckbox = document.getElementById("skip-pm");
 const noTrackCheckbox = document.getElementById("no-track");
 const skipPmLabel = skipPmCheckbox.closest(".toggle-label");
@@ -20,7 +22,12 @@ const mileageSectionEl = document.getElementById("mileage-section");
 const mileageChartEl = document.getElementById("mileage-chart");
 const mileageSubtitleEl = document.getElementById("mileage-subtitle");
 
-const WORLD_RECORD_SECS = 2 * 3600 + 0 * 60 + 40; // 2:00:40
+let currentDistance = "marathon";
+
+const DISTANCE_CONFIG = {
+  marathon: { badge: "42.195 km", wr: 2 * 3600 + 0 * 60 + 40, hourMin: 2 },
+  half: { badge: "21.0975 km", wr: 57 * 60 + 31, hourMin: 0 },
+};
 
 const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -90,60 +97,72 @@ function goalToSeconds(goal) {
 function getDisclaimer(secs) {
   if (secs <= 0) return null;
 
-  const hours = secs / 3600;
+  const cfg = DISTANCE_CONFIG[currentDistance];
 
-  // Below world record — you're not Kelvin Kiptum
-  if (secs < WORLD_RECORD_SECS) {
+  // Below world record
+  if (secs < cfg.wr) {
+    if (currentDistance === "half") {
+      return {
+        tone: "spicy",
+        text: "<strong>Hold on.</strong> That's faster than the world record (57:31, Kibiwott Kandie, Valencia 2020). Unless you've been secretly training at 2,400m altitude in Iten and your VO2max has its own Wikipedia page, we're going to need you to add a few minutes.",
+      };
+    }
     return {
       tone: "spicy",
       text: "<strong>Hold on.</strong> That's faster than the world record (2:00:40, Kelvin Kiptum, Chicago 2023). Unless you're a time traveller from a future where humans have extra tendons, we're going to need you to add a few minutes. We believe in you — just not <em>that</em> much.",
     };
   }
 
-  // Sub-2:05 — comical territory
+  if (currentDistance === "half") return getHalfDisclaimer(secs);
+  return getMarathonDisclaimer(secs);
+}
+
+function getMarathonDisclaimer(secs) {
+  const hours = secs / 3600;
+
   if (hours < 2 + 5 / 60) {
     const msgs = [
       "<strong>Sub 2:05? Sure, and I'm Eliud Kipchoge's pacemaker.</strong> There are maybe 15 people alive who can do this, and they all live at altitude, eat ugali three times a day, and haven't sat in an office chair since 2007. But hey — if you've got a VO2max north of 85 and your resting heart rate is \"basically dead,\" who are we to judge? Let's see those paces.",
       "<strong>Are you... are you Kelvin Kiptum?</strong> Because sub-2:05 is not a goal, it's a press conference. You'd need to average under 4:44/mi for 26.2 miles. Most people can't hold that pace for a single mile. On a bike. Downhill. But if you insist, we'll crunch the numbers. Just know the math is judging you.",
       "<strong>We ran the numbers. The numbers ran away.</strong> Sub-2:05 puts you in a group so small they could share a matatu in Eldoret. This isn't a training plan, it's a scientific experiment. You'll need to run every interval like a cheetah who's late for a meeting. We'll generate the paces, but we're doing it with one eyebrow raised.",
     ];
-    return {
-      tone: "spicy",
-      text: msgs[Math.floor(Math.random() * msgs.length)],
-    };
+    return { tone: "spicy", text: msgs[Math.floor(Math.random() * msgs.length)] };
   }
-
-  // 3:30+ is the default "Just Finish" plan — no disclaimer needed
   if (hours >= 3.5) return null;
-
   if (hours < 2.5) {
-    return {
-      tone: "spicy",
-      text: "<strong>Sub 2:30? OK, Kipchoge.</strong> This is elite-level territory — we're talking years of high-mileage training, peak weeks around 95 miles, a VO2max that would impress a lab tech, and a pain tolerance that borders on spiritual. If you're not already comfortably running 80+ mile weeks, maybe add a few minutes to that goal. Just a thought.",
-    };
+    return { tone: "spicy", text: "<strong>Sub 2:30? OK, Kipchoge.</strong> This is elite-level territory — we're talking years of high-mileage training, peak weeks around 95 miles, a VO2max that would impress a lab tech, and a pain tolerance that borders on spiritual. If you're not already comfortably running 80+ mile weeks, maybe add a few minutes to that goal. Just a thought." };
   }
   if (hours < 2.75) {
-    return {
-      tone: "spicy",
-      text: "<strong>Sub 2:45 is seriously fast.</strong> This plan peaks around 90 mile weeks. You'll need a well-tuned fueling strategy and the kind of discipline that makes your friends worry about you. If you can already run a 1:18 half in your sleep, carry on. Otherwise, no shame in dialing it back a notch.",
-    };
+    return { tone: "spicy", text: "<strong>Sub 2:45 is seriously fast.</strong> This plan peaks around 90 mile weeks. You'll need a well-tuned fueling strategy and the kind of discipline that makes your friends worry about you. If you can already run a 1:18 half in your sleep, carry on. Otherwise, no shame in dialing it back a notch." };
   }
   if (hours < 3) {
-    return {
-      tone: "spicy",
-      text: "<strong>Sub-3 — the white whale of recreational marathoning.</strong> You're looking at peak weeks in the mid-80s. This takes real commitment: structured speedwork, long runs that eat your Saturday mornings, and the willingness to become the person who talks about \"easy pace\" at dinner parties. You've been warned.",
-    };
+    return { tone: "spicy", text: "<strong>Sub-3 — the white whale of recreational marathoning.</strong> You're looking at peak weeks in the mid-80s. This takes real commitment: structured speedwork, long runs that eat your Saturday mornings, and the willingness to become the person who talks about \"easy pace\" at dinner parties. You've been warned." };
   }
   if (hours < 3.25) {
-    return {
-      tone: "warm",
-      text: "<strong>Sub-3:15 is no joke.</strong> You're faster than ~95% of marathon finishers. Peak weeks will hit the low 80s — this needs a solid training block, smart pacing, and a healthy respect for the wall at mile 20.",
-    };
+    return { tone: "warm", text: "<strong>Sub-3:15 is no joke.</strong> You're faster than ~95% of marathon finishers. Peak weeks will hit the low 80s — this needs a solid training block, smart pacing, and a healthy respect for the wall at mile 20." };
   }
-  return {
-    tone: "warm",
-    text: "<strong>You're entering competitive territory.</strong> Sub-3:30 unlocks the full program — track intervals, tempo runs, fartlek sessions, and PM doubles. Peak weeks push into the 70–80 mile range. This is a serious training block built for experienced runners. If that sounds like you, let's go.",
-  };
+  return { tone: "warm", text: "<strong>You're entering competitive territory.</strong> Sub-3:30 unlocks the full program — track intervals, tempo runs, fartlek sessions, and PM doubles. Peak weeks push into the 70–80 mile range. This is a serious training block built for experienced runners. If that sounds like you, let's go." };
+}
+
+function getHalfDisclaimer(secs) {
+  const mins = secs / 60;
+
+  if (mins < 60) {
+    const msgs = [
+      "<strong>Sub-60? You absolute legend.</strong> That's a pace most people can't hold for a single kilometre, sustained for 21 of them. You'd be rubbing shoulders with the Kenyans at the front of the pack. If your 10K PR starts with a 2, maybe. Otherwise, we're just impressed you typed this with a straight face.",
+      "<strong>Under an hour for a half marathon.</strong> That's Faith Kipyegon territory — and she runs the 1500m. You'd need to hold ~4:33/mi for 13.1 miles without blinking. We'll generate the paces, but know that the calculator is giving you side-eye.",
+      "<strong>We checked the math. The math checked itself into therapy.</strong> Sub-60 for a half marathon puts you among maybe 50 people on the planet. If you're one of them, you don't need this website. If you're not, maybe add 15 minutes and join the rest of us mortals.",
+    ];
+    return { tone: "spicy", text: msgs[Math.floor(Math.random() * msgs.length)] };
+  }
+  if (mins >= 95) return null; // 1:35+ is just finish, no disclaimer
+  if (mins < 75) {
+    return { tone: "spicy", text: "<strong>Sub-1:15 is elite-level half marathon running.</strong> You're looking at 5:43/mi pace for 13.1 miles — peak weeks around 60–65 miles with serious speedwork. If your 5K PR is comfortably under 17 minutes, you belong here. Otherwise, this plan will humble you before it helps you." };
+  }
+  if (mins < 85) {
+    return { tone: "warm", text: "<strong>Sub-1:25 is seriously fast.</strong> You'll need a strong speed base and the discipline to hold pace when your legs start negotiating. Peak weeks hit 55–60 miles. This is a proper competitive block." };
+  }
+  return { tone: "warm", text: "<strong>You're entering competitive territory.</strong> Sub-1:35 unlocks the full program — track intervals, tempo runs, fartlek sessions, and PM doubles. Peak weeks push into the 50–65 mile range. A serious block for serious runners. If that sounds like you, let's go." };
 }
 
 function renderDisclaimer(secs) {
@@ -231,7 +250,7 @@ async function fetchPlan() {
   const secs = goalToSeconds(goal);
 
   // Below world record — show disclaimer but don't generate
-  if (secs < WORLD_RECORD_SECS) {
+  if (secs < DISTANCE_CONFIG[currentDistance].wr) {
     renderDisclaimer(secs);
     lastPlanData = null;
     planEl.innerHTML = "";
@@ -251,7 +270,7 @@ async function fetchPlan() {
   renderDisclaimer(secs);
 
   try {
-    const resp = await fetch(`${API}?goal=${encodeURIComponent(goal)}&unit=${unit}`);
+    const resp = await fetch(`${API}?goal=${encodeURIComponent(goal)}&unit=${unit}&distance=${currentDistance}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
     lastPlanData = data;
@@ -327,7 +346,7 @@ function estimateRecoveryPace(paces) {
 // -- Render pace zones --
 
 function renderPaces(paces) {
-  const zones = ["easy", "recovery", "marathon", "tempo", "threshold", "5k"];
+  const zones = ["easy", "recovery", "race", "tempo", "threshold", "5k"];
   pacesEl.innerHTML = zones
     .map(
       (z) => `
@@ -456,6 +475,24 @@ function garminStep(step) {
   if (step.target) label += ` @ ${step.target}`;
   return `<span class="garmin-step ${cls}">${label}</span>`;
 }
+
+// -- Distance toggle --
+
+distanceToggle.addEventListener("click", (e) => {
+  const btn = e.target.closest(".dist-btn");
+  if (!btn || btn.classList.contains("active")) return;
+
+  distanceToggle.querySelectorAll(".dist-btn").forEach((b) => b.classList.remove("active"));
+  btn.classList.add("active");
+  currentDistance = btn.dataset.distance;
+
+  const cfg = DISTANCE_CONFIG[currentDistance];
+  headerBadge.textContent = cfg.badge;
+  goalH.min = cfg.hourMin;
+
+  // Reset to empty state when switching distances
+  resetToEmpty();
+});
 
 // -- Time input helpers --
 

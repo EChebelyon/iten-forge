@@ -181,6 +181,34 @@ body {
   box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.1);
 }
 
+.distance-toggle {
+  display: flex;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.dist-btn {
+  padding: 0.55rem 0.85rem;
+  border: none;
+  background: var(--bg);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+}
+
+.dist-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.dist-btn:not(.active):hover {
+  background: var(--surface-hover);
+}
+
 .time-input {
   display: flex;
   align-items: center;

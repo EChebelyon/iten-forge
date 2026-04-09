@@ -13,7 +13,7 @@
 <body>
   <div class="container">
     <header class="header">
-      <div class="header-badge">42.195 km</div>
+      <div class="header-badge" id="header-badge">42.195 km</div>
       <h1>Iten Forge</h1>
       <p class="tagline">Forged in the City of Champions</p>
       <p class="subtitle">Enter your goal time. We'll build your plan.</p>
@@ -21,12 +21,19 @@
 
     <section class="about-section" id="about-section">
       <p class="about-text">Every morning at 6am in Iten, Kenya -- 2,400 metres above sea level -- the world's fastest distance runners lace up and head out into the red-dirt roads of the Rift Valley. No GPS watches, no spreadsheets, no overthinking. Just decades of accumulated wisdom, baked into a rhythm: hard days hard, easy days easy, long run Saturday, rest Sunday.</p>
-      <p class="about-text">This tool distils that philosophy into a 12-week marathon plan built around <em>your</em> goal time. Whether you're chasing a BQ or just trying to cross the finish line without walking through a McDonald's drive-through at mile 22 -- punch in your time and we'll do the math. You do the running.</p>
+      <p class="about-text">This tool distils that philosophy into a 12-week training plan built around <em>your</em> goal time. Whether you're chasing a BQ, gunning for a half marathon PR, or just trying to cross the finish line without walking through a McDonald's drive-through at mile 22 -- punch in your time and we'll do the math. You do the running.</p>
     </section>
 
     <section class="input-section">
       <div class="controls">
         <div class="controls-top">
+          <div class="control-group">
+            <label>Distance</label>
+            <div class="distance-toggle" id="distance-toggle">
+              <button type="button" class="dist-btn active" data-distance="marathon">Marathon</button>
+              <button type="button" class="dist-btn" data-distance="half">Half Marathon</button>
+            </div>
+          </div>
           <div class="control-group">
             <label>Goal Time</label>
             <div class="time-input" id="time-input">
