@@ -916,4 +916,6 @@ body {
 @media (max-width: 480px) {
   .paces { grid-template-columns: repeat(2, 1fr); }
   .disclaimer-card { margin: 0.5rem 0.25rem; padding: 0.85rem 1rem; font-size: 0.82rem; }
+  .distance-toggle { flex-wrap: wrap; }
+  .dist-btn { flex: 1; min-width: 0; text-align: center; font-size: 0.75rem; padding: 0.45rem 0.5rem; }
 }

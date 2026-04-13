@@ -77,6 +77,18 @@ def test_half_zone_ordering():
     )
 
 
+def test_5k_pace():
+    zones = PaceZones.from_goal_time("20:00", unit="mi", distance="5k")
+    # 1200 / 3.10686 = 386.2 -> 386 sec = 6:26/mi
+    assert zones.race_pace == 386
+
+
+def test_10k_pace():
+    zones = PaceZones.from_goal_time("45:00", unit="mi", distance="10k")
+    # 2700 / 6.21371 = 434.6 -> 435 sec = 7:15/mi
+    assert zones.race_pace == 435
+
+
 def test_default_distance_is_marathon():
     zones = PaceZones.from_goal_time("2:50:00")
     assert zones.distance == "marathon"

@@ -224,3 +224,84 @@ def test_half_evening_recovery_30min():
     mon = plan.workout(date(2026, 3, 9))  # Monday
     assert mon["evening"] is not None
     assert "30 min" in mon["evening"]["duration"]
+
+
+# -- 5K --
+
+
+def _5k_plan() -> Plan:
+    return Plan(goal_time="19:00", start_date=date(2026, 3, 9), unit="mi", distance="5k")
+
+
+def _5k_jf_plan() -> Plan:
+    return Plan(goal_time="25:00", start_date=date(2026, 3, 9), unit="mi", distance="5k")
+
+
+def test_5k_competitive_cutoff():
+    assert _5k_plan().is_competitive is True
+    jf = Plan(goal_time="22:00", start_date=date(2026, 3, 9), distance="5k")
+    assert jf.is_competitive is False
+
+
+def test_5k_no_evening():
+    # No doubles for 5K in either tier
+    comp = _5k_plan()
+    assert all(w["evening"] is None for w in comp.all_workouts())
+    jf = _5k_jf_plan()
+    assert all(w["evening"] is None for w in jf.all_workouts())
+
+
+def test_5k_long_run_peak():
+    comp = _5k_plan()
+    saturdays = [w for w in comp.all_workouts() if w["day"] == "Saturday"]
+    peak_km = max(int(s["duration"].split("K")[0]) for s in saturdays)
+    assert peak_km == 14
+
+    jf = _5k_jf_plan()
+    saturdays_jf = [w for w in jf.all_workouts() if w["day"] == "Saturday"]
+    peak_km_jf = max(int(s["duration"].split("K")[0]) for s in saturdays_jf)
+    assert peak_km_jf == 10
+
+
+# -- 10K --
+
+
+def _10k_plan() -> Plan:
+    return Plan(goal_time="40:00", start_date=date(2026, 3, 9), unit="mi", distance="10k")
+
+
+def _10k_jf_plan() -> Plan:
+    return Plan(goal_time="50:00", start_date=date(2026, 3, 9), unit="mi", distance="10k")
+
+
+def test_10k_competitive_cutoff():
+    assert _10k_plan().is_competitive is True
+    jf = Plan(goal_time="45:00", start_date=date(2026, 3, 9), distance="10k")
+    assert jf.is_competitive is False
+
+
+def test_10k_no_evening():
+    comp = _10k_plan()
+    assert all(w["evening"] is None for w in comp.all_workouts())
+    jf = _10k_jf_plan()
+    assert all(w["evening"] is None for w in jf.all_workouts())
+
+
+def test_10k_long_run_peak():
+    comp = _10k_plan()
+    saturdays = [w for w in comp.all_workouts() if w["day"] == "Saturday"]
+    peak_km = max(int(s["duration"].split("K")[0]) for s in saturdays)
+    assert peak_km == 18
+
+    jf = _10k_jf_plan()
+    saturdays_jf = [w for w in jf.all_workouts() if w["day"] == "Saturday"]
+    peak_km_jf = max(int(s["duration"].split("K")[0]) for s in saturdays_jf)
+    assert peak_km_jf == 14
+
+
+def test_5k_mileage_lower_than_10k():
+    p5 = _5k_plan()
+    p10 = _10k_plan()
+    peak_5 = max(w["mileage"] for w in p5.weekly_mileage())
+    peak_10 = max(w["mileage"] for w in p10.weekly_mileage())
+    assert peak_5 < peak_10

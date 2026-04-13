@@ -17,7 +17,7 @@ from iten_forge.plan import Plan
 
 log = logging.getLogger(__name__)
 
-VALID_DISTANCES = {"marathon", "half"}
+VALID_DISTANCES = {"marathon", "half", "10k", "5k"}
 
 app = FastAPI(
     title="Iten Forge",

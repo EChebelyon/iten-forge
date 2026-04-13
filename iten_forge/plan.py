@@ -18,6 +18,8 @@ DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
 COMPETITIVE_CUTOFFS = {
     "marathon": 3 * 3600 + 30 * 60,  # 3:30:00
     "half": 1 * 3600 + 35 * 60,      # 1:35:00
+    "10k": 42 * 60,                   # 42:00
+    "5k": 20 * 60,                    # 20:00
 }
 
 
@@ -106,25 +108,56 @@ class Plan:
         return self._jf_mileage()
 
     def _competitive_mileage(self) -> list[dict]:
-        """Competitive tier: high mileage with doubles."""
+        """Competitive tier mileage."""
         km_per_mile = 1.60934
-        is_half = self.distance == "half"
+        d = self.distance
         results = []
+
+        # Per-distance duration tables (minutes)
+        mon_durs = {
+            "marathon": {1: 60, 2: 60, 3: 65, 4: 65, 5: 65, 6: 70, 7: 70, 8: 70, 9: 65, 10: 60, 11: 50, 12: 40},
+            "half":     {1: 50, 2: 50, 3: 55, 4: 55, 5: 55, 6: 60, 7: 60, 8: 60, 9: 55, 10: 50, 11: 40, 12: 35},
+            "10k":      {1: 45, 2: 45, 3: 50, 4: 50, 5: 50, 6: 55, 7: 55, 8: 55, 9: 50, 10: 45, 11: 35, 12: 30},
+            "5k":       {1: 40, 2: 40, 3: 45, 4: 45, 5: 45, 6: 50, 7: 50, 8: 50, 9: 45, 10: 40, 11: 30, 12: 25},
+        }
+        wed_durs = {
+            "marathon": {1: 50, 2: 55, 3: 60, 4: 65, 5: 70, 6: 75, 7: 80, 8: 75, 9: 70, 10: 60, 11: 45, 12: 30},
+            "half":     {1: 40, 2: 45, 3: 50, 4: 55, 5: 55, 6: 60, 7: 65, 8: 60, 9: 55, 10: 50, 11: 35, 12: 25},
+            "10k":      {1: 35, 2: 40, 3: 45, 4: 50, 5: 50, 6: 55, 7: 55, 8: 55, 9: 50, 10: 45, 11: 30, 12: 25},
+            "5k":       {1: 30, 2: 35, 3: 40, 4: 40, 5: 45, 6: 45, 7: 50, 8: 45, 9: 40, 10: 35, 11: 25, 12: 20},
+        }
+        fri_durs = {
+            "marathon": {1: 50, 2: 55, 3: 60, 4: 65, 5: 70, 6: 75, 7: 80, 8: 75, 9: 70, 10: 60, 11: 45, 12: 30},
+            "half":     {1: 40, 2: 45, 3: 50, 4: 55, 5: 55, 6: 60, 7: 65, 8: 60, 9: 55, 10: 50, 11: 35, 12: 25},
+            "10k":      {1: 35, 2: 40, 3: 45, 4: 50, 5: 50, 6: 55, 7: 55, 8: 55, 9: 50, 10: 45, 11: 30, 12: 25},
+            "5k":       {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 40, 7: 45, 8: 40, 9: 35, 10: 30, 11: 25, 12: 20},
+        }
+        lr_kms = {
+            "marathon": {1: 25, 2: 28, 3: 30, 4: 32, 5: 34, 6: 35, 7: 38, 8: 40, 9: 35, 10: 30, 11: 22, 12: 10},
+            "half":     {1: 14, 2: 16, 3: 17, 4: 18, 5: 20, 6: 21, 7: 22, 8: 24, 9: 21, 10: 18, 11: 14, 12: 8},
+            "10k":      {1: 10, 2: 12, 3: 13, 4: 14, 5: 15, 6: 16, 7: 17, 8: 18, 9: 16, 10: 14, 11: 10, 12: 6},
+            "5k":       {1: 8, 2: 9, 3: 10, 4: 10, 5: 11, 6: 12, 7: 13, 8: 14, 9: 12, 10: 10, 11: 8, 12: 5},
+        }
+
+        mon_dur = mon_durs[d]
+        wed_dur = wed_durs[d]
+        fri_dur = fri_durs[d]
+        lr_km = lr_kms[d]
+
+        # Doubles only for marathon/half
+        has_doubles = d in ("marathon", "half")
+        rec_dur = 30 if d == "half" else 40
 
         for week in range(1, 13):
             total_km = 0.0
 
             # Monday – progressive
-            if is_half:
-                mon_dur = {1: 50, 2: 50, 3: 55, 4: 55, 5: 55, 6: 60, 7: 60, 8: 60, 9: 55, 10: 50, 11: 40, 12: 35}
-            else:
-                mon_dur = {1: 60, 2: 60, 3: 65, 4: 65, 5: 65, 6: 70, 7: 70, 8: 70, 9: 65, 10: 60, 11: 50, 12: 40}
             pace_sec_per_km = self.paces.race_pace + round(80 * self.paces._scale)
             if self.paces.unit == "mi":
                 pace_sec_per_km = pace_sec_per_km / km_per_mile
             total_km += mon_dur[week] * 60 / pace_sec_per_km
 
-            # Tuesday – track intervals (same reps for both distances)
+            # Tuesday – track intervals (same reps for all distances)
             tue_reps = {1: 5, 2: 6, 3: 7, 4: 8, 5: 9, 6: 10, 7: 10, 8: 10, 9: 10, 10: 8, 11: 6, 12: 4}
             easy_sec_per_km = self.paces.easy / km_per_mile if self.paces.unit == "mi" else self.paces.easy
             total_km += 25 * 60 / easy_sec_per_km  # warmup + cooldown
@@ -132,10 +165,6 @@ class Plan:
             total_km += tue_reps[week] * 0.3  # ~300m jog between reps
 
             # Wednesday – tempo
-            if is_half:
-                wed_dur = {1: 40, 2: 45, 3: 50, 4: 55, 5: 55, 6: 60, 7: 65, 8: 60, 9: 55, 10: 50, 11: 35, 12: 25}
-            else:
-                wed_dur = {1: 50, 2: 55, 3: 60, 4: 65, 5: 70, 6: 75, 7: 80, 8: 75, 9: 70, 10: 60, 11: 45, 12: 30}
             tempo_sec_per_km = self.paces.tempo / km_per_mile if self.paces.unit == "mi" else self.paces.tempo
             avg_wed = (easy_sec_per_km * 0.4 + tempo_sec_per_km * 0.6)
             total_km += wed_dur[week] * 60 / avg_wed
@@ -148,24 +177,16 @@ class Plan:
             total_km += thu_dur * 60 / avg_thu
 
             # Friday – easy
-            if is_half:
-                fri_dur = {1: 40, 2: 45, 3: 50, 4: 55, 5: 55, 6: 60, 7: 65, 8: 60, 9: 55, 10: 50, 11: 35, 12: 25}
-            else:
-                fri_dur = {1: 50, 2: 55, 3: 60, 4: 65, 5: 70, 6: 75, 7: 80, 8: 75, 9: 70, 10: 60, 11: 45, 12: 30}
             total_km += fri_dur[week] * 60 / easy_sec_per_km
 
             # Saturday – long run (explicit km)
-            if is_half:
-                lr_km = {1: 14, 2: 16, 3: 17, 4: 18, 5: 20, 6: 21, 7: 22, 8: 24, 9: 21, 10: 18, 11: 14, 12: 8}
-            else:
-                lr_km = {1: 25, 2: 28, 3: 30, 4: 32, 5: 34, 6: 35, 7: 38, 8: 40, 9: 35, 10: 30, 11: 22, 12: 10}
             total_km += lr_km[week]
 
-            # Evening recovery doubles (Mon/Wed/Fri = 3x, except week 12 after Wed)
-            rec_dur = 30 if is_half else 40
-            rec_sec_per_km = self.paces.recovery / km_per_mile if self.paces.unit == "mi" else self.paces.recovery
-            doubles = 2 if week == 12 else 3
-            total_km += doubles * rec_dur * 60 / rec_sec_per_km
+            # Evening recovery doubles (marathon/half only)
+            if has_doubles:
+                rec_sec_per_km = self.paces.recovery / km_per_mile if self.paces.unit == "mi" else self.paces.recovery
+                doubles = 2 if week == 12 else 3
+                total_km += doubles * rec_dur * 60 / rec_sec_per_km
 
             if self.unit == "mi":
                 total_dist = round(total_km / km_per_mile, 1)
@@ -183,22 +204,46 @@ class Plan:
     def _jf_mileage(self) -> list[dict]:
         """Just Finish tier: moderate mileage, no doubles."""
         km_per_mile = 1.60934
-        is_half = self.distance == "half"
+        d = self.distance
         easy_sec_per_km = self.paces.easy / km_per_mile if self.paces.unit == "mi" else self.paces.easy
         results = []
 
-        if is_half:
-            mon_dur = {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 35, 9: 30, 10: 25, 11: 25, 12: 20}
-            tue_dur = {1: 25, 2: 25, 3: 25, 4: 30, 5: 30, 6: 30, 7: 35, 8: 35, 9: 30, 10: 25, 11: 20, 12: 15}
-            wed_dur = {1: 30, 2: 30, 3: 30, 4: 35, 5: 35, 6: 40, 7: 40, 8: 35, 9: 30, 10: 30, 11: 25, 12: 20}
-            fri_dur = {1: 20, 2: 20, 3: 25, 4: 25, 5: 25, 6: 25, 7: 30, 8: 30, 9: 25, 10: 25, 11: 20, 12: 15}
-            lr_km = {1: 10, 2: 11, 3: 12, 4: 13, 5: 14, 6: 16, 7: 17, 8: 18, 9: 16, 10: 14, 11: 11, 12: 6}
-        else:
-            mon_dur = {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 45, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25}
-            tue_dur = {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 40, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 20}
-            wed_dur = {1: 35, 2: 35, 3: 40, 4: 40, 5: 45, 6: 50, 7: 50, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25}
-            fri_dur = {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 35, 9: 30, 10: 30, 11: 25, 12: 20}
-            lr_km = {1: 14, 2: 16, 3: 18, 4: 20, 5: 22, 6: 25, 7: 28, 8: 32, 9: 28, 10: 22, 11: 16, 12: 10}
+        mon_durs = {
+            "marathon": {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 45, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25},
+            "half":     {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 35, 9: 30, 10: 25, 11: 25, 12: 20},
+            "10k":      {1: 20, 2: 20, 3: 25, 4: 25, 5: 25, 6: 30, 7: 30, 8: 30, 9: 25, 10: 25, 11: 20, 12: 15},
+            "5k":       {1: 15, 2: 15, 3: 20, 4: 20, 5: 20, 6: 25, 7: 25, 8: 25, 9: 20, 10: 20, 11: 15, 12: 15},
+        }
+        tue_durs = {
+            "marathon": {1: 30, 2: 30, 3: 35, 4: 35, 5: 40, 6: 40, 7: 45, 8: 45, 9: 40, 10: 35, 11: 30, 12: 20},
+            "half":     {1: 25, 2: 25, 3: 25, 4: 30, 5: 30, 6: 30, 7: 35, 8: 35, 9: 30, 10: 25, 11: 20, 12: 15},
+            "10k":      {1: 20, 2: 20, 3: 25, 4: 25, 5: 25, 6: 30, 7: 30, 8: 30, 9: 25, 10: 20, 11: 20, 12: 15},
+            "5k":       {1: 15, 2: 15, 3: 20, 4: 20, 5: 20, 6: 25, 7: 25, 8: 25, 9: 20, 10: 20, 11: 15, 12: 10},
+        }
+        wed_durs = {
+            "marathon": {1: 35, 2: 35, 3: 40, 4: 40, 5: 45, 6: 50, 7: 50, 8: 45, 9: 40, 10: 35, 11: 30, 12: 25},
+            "half":     {1: 30, 2: 30, 3: 30, 4: 35, 5: 35, 6: 40, 7: 40, 8: 35, 9: 30, 10: 30, 11: 25, 12: 20},
+            "10k":      {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 30, 9: 25, 10: 25, 11: 20, 12: 15},
+            "5k":       {1: 20, 2: 20, 3: 25, 4: 25, 5: 25, 6: 30, 7: 30, 8: 25, 9: 20, 10: 20, 11: 15, 12: 15},
+        }
+        fri_durs = {
+            "marathon": {1: 25, 2: 25, 3: 30, 4: 30, 5: 30, 6: 35, 7: 35, 8: 35, 9: 30, 10: 30, 11: 25, 12: 20},
+            "half":     {1: 20, 2: 20, 3: 25, 4: 25, 5: 25, 6: 25, 7: 30, 8: 30, 9: 25, 10: 25, 11: 20, 12: 15},
+            "10k":      {1: 15, 2: 15, 3: 20, 4: 20, 5: 20, 6: 25, 7: 25, 8: 25, 9: 20, 10: 20, 11: 15, 12: 15},
+            "5k":       {1: 15, 2: 15, 3: 15, 4: 15, 5: 20, 6: 20, 7: 20, 8: 20, 9: 15, 10: 15, 11: 15, 12: 10},
+        }
+        lr_kms = {
+            "marathon": {1: 14, 2: 16, 3: 18, 4: 20, 5: 22, 6: 25, 7: 28, 8: 32, 9: 28, 10: 22, 11: 16, 12: 10},
+            "half":     {1: 10, 2: 11, 3: 12, 4: 13, 5: 14, 6: 16, 7: 17, 8: 18, 9: 16, 10: 14, 11: 11, 12: 6},
+            "10k":      {1: 6, 2: 7, 3: 8, 4: 9, 5: 10, 6: 11, 7: 12, 8: 14, 9: 12, 10: 10, 11: 8, 12: 5},
+            "5k":       {1: 5, 2: 5, 3: 6, 4: 6, 5: 7, 6: 8, 7: 9, 8: 10, 9: 8, 10: 7, 11: 6, 12: 4},
+        }
+
+        mon_dur = mon_durs[d]
+        tue_dur = tue_durs[d]
+        wed_dur = wed_durs[d]
+        fri_dur = fri_durs[d]
+        lr_km = lr_kms[d]
 
         for week in range(1, 13):
             total_km = 0.0
@@ -452,9 +497,13 @@ class Plan:
         }
 
     def _saturday(self, week: int) -> dict:
-        if self.distance == "half":
-            return self._half_saturday(week)
-        return self._marathon_saturday(week)
+        dispatch = {
+            "marathon": self._marathon_saturday,
+            "half": self._half_saturday,
+            "10k": self._10k_saturday,
+            "5k": self._5k_saturday,
+        }
+        return dispatch[self.distance](week)
 
     def _marathon_saturday(self, week: int) -> dict:
         pace_rp = self.paces.format("race")
@@ -522,6 +571,68 @@ class Plan:
             ],
         }
 
+    def _10k_saturday(self, week: int) -> dict:
+        pace_rp = self.paces.format("race")
+        long_runs = {
+            1: {"km": 10, "summary": f"10K easy -- first long run, find your rhythm"},
+            2: {"km": 12, "summary": f"12K with last 3K at {pace_rp}"},
+            3: {"km": 13, "summary": f"13K easy -- building steadily"},
+            4: {"km": 14, "summary": f"14K with 2 x 3K @ {pace_rp} w/ 1K easy between"},
+            5: {"km": 15, "summary": f"15K progressive -- last 5K descending to {pace_rp}"},
+            6: {"km": 16, "summary": f"16K with 3 x 3K @ {pace_rp} w/ 1K easy between"},
+            7: {"km": 17, "summary": f"17K progressive -- last 5K at {pace_rp}"},
+            8: {"km": 18, "summary": f"18K -- THE BIG ONE. Last 6K at {pace_rp}"},
+            9: {"km": 16, "summary": f"16K with 3 x 3K @ {pace_rp} w/ 800m easy between"},
+            10: {"km": 14, "summary": f"14K progressive -- last 4K at {pace_rp}. Begin taper."},
+            11: {"km": 10, "summary": f"10K easy with last 3K at {pace_rp}. Stay sharp."},
+            12: {"km": 6, "summary": f"6K shakeout with 2 x 1K at {pace_rp}. Trust the work."},
+        }
+        lr = long_runs[week]
+        miles = round(lr["km"] * 0.621, 1)
+
+        return {
+            "icon": "long-run",
+            "title": "Long Run",
+            "duration": f"{lr['km']}K ({miles} mi)",
+            "summary": lr["summary"],
+            "details": (
+                f"Practice fueling and hydration. RP = {pace_rp}."
+            ),
+            "garmin_steps": [
+                {"type": "active", "distance_km": lr["km"], "target": f"progressive to {pace_rp}"},
+            ],
+        }
+
+    def _5k_saturday(self, week: int) -> dict:
+        pace_rp = self.paces.format("race")
+        long_runs = {
+            1: {"km": 8, "summary": f"8K easy -- aerobic base building"},
+            2: {"km": 9, "summary": f"9K with last 2K at {pace_rp}"},
+            3: {"km": 10, "summary": f"10K easy -- double race distance"},
+            4: {"km": 10, "summary": f"10K with 2 x 2K @ {pace_rp} w/ 1K easy between"},
+            5: {"km": 11, "summary": f"11K progressive -- last 3K descending to {pace_rp}"},
+            6: {"km": 12, "summary": f"12K with 3 x 2K @ {pace_rp} w/ 1K easy between"},
+            7: {"km": 13, "summary": f"13K progressive -- last 3K at {pace_rp}"},
+            8: {"km": 14, "summary": f"14K -- THE BIG ONE. Last 4K at {pace_rp}"},
+            9: {"km": 12, "summary": f"12K with 2 x 2K @ {pace_rp} w/ 800m easy between"},
+            10: {"km": 10, "summary": f"10K progressive -- last 3K at {pace_rp}. Begin taper."},
+            11: {"km": 8, "summary": f"8K easy with last 2K at {pace_rp}. Stay sharp."},
+            12: {"km": 5, "summary": f"5K shakeout with 2 x 1K at {pace_rp}. Trust the work."},
+        }
+        lr = long_runs[week]
+        miles = round(lr["km"] * 0.621, 1)
+
+        return {
+            "icon": "long-run",
+            "title": "Long Run",
+            "duration": f"{lr['km']}K ({miles} mi)",
+            "summary": lr["summary"],
+            "details": f"Easy effort with race-pace segments. RP = {pace_rp}.",
+            "garmin_steps": [
+                {"type": "active", "distance_km": lr["km"], "target": f"progressive to {pace_rp}"},
+            ],
+        }
+
     def _sunday(self, _week: int) -> dict:
         return {
             "icon": "rest",
@@ -534,6 +645,8 @@ class Plan:
 
     def _evening(self, week: int, day: int) -> dict | None:
         if not self.is_competitive:
+            return None
+        if self.distance in ("5k", "10k"):
             return None
         if day >= 5:
             return None
@@ -662,9 +775,13 @@ class Plan:
         }
 
     def _jf_saturday(self, week: int) -> dict:
-        if self.distance == "half":
-            return self._half_jf_saturday(week)
-        return self._marathon_jf_saturday(week)
+        dispatch = {
+            "marathon": self._marathon_jf_saturday,
+            "half": self._half_jf_saturday,
+            "10k": self._10k_jf_saturday,
+            "5k": self._5k_jf_saturday,
+        }
+        return dispatch[self.distance](week)
 
     def _marathon_jf_saturday(self, week: int) -> dict:
         pace_easy = self.paces.format("easy")
@@ -682,23 +799,7 @@ class Plan:
             11: {"km": 16, "summary": "16K easy -- trust the training"},
             12: {"km": 10, "summary": "10K shakeout -- stay loose, stay confident"},
         }
-        lr = long_runs[week]
-        miles = round(lr["km"] * 0.621, 1)
-
-        return {
-            "icon": "long-run",
-            "title": "Long Run",
-            "duration": f"{lr['km']}K ({miles} mi)",
-            "summary": lr["summary"],
-            "details": (
-                f"All easy pace @ {pace_easy}. Walk breaks are fine. "
-                f"Practice race-day nutrition: take gels every 45 min, hydrate every 20 min. "
-                f"The goal is finishing the distance, not the pace."
-            ),
-            "garmin_steps": [
-                {"type": "active", "distance_km": lr["km"], "target": pace_easy},
-            ],
-        }
+        return self._jf_long_run(long_runs[week], pace_easy)
 
     def _half_jf_saturday(self, week: int) -> dict:
         pace_easy = self.paces.format("easy")
@@ -716,9 +817,46 @@ class Plan:
             11: {"km": 11, "summary": "11K easy -- trust the training"},
             12: {"km": 6, "summary": "6K shakeout -- stay loose, stay confident"},
         }
-        lr = long_runs[week]
-        miles = round(lr["km"] * 0.621, 1)
+        return self._jf_long_run(long_runs[week], pace_easy)
 
+    def _10k_jf_saturday(self, week: int) -> dict:
+        pace_easy = self.paces.format("easy")
+        long_runs = {
+            1: {"km": 6, "summary": "6K easy -- just time on your feet"},
+            2: {"km": 7, "summary": "7K easy -- settle into a rhythm"},
+            3: {"km": 8, "summary": "8K easy -- building steadily"},
+            4: {"km": 9, "summary": "9K easy -- getting comfortable"},
+            5: {"km": 10, "summary": "10K easy -- race distance! Practice fueling"},
+            6: {"km": 11, "summary": "11K easy -- beyond race distance now"},
+            7: {"km": 12, "summary": "12K easy -- respect the distance"},
+            8: {"km": 14, "summary": "14K easy -- THE BIG ONE. You can walk if you need to."},
+            9: {"km": 12, "summary": "12K easy -- you've done this before"},
+            10: {"km": 10, "summary": "10K easy -- begin taper, legs may feel weird"},
+            11: {"km": 8, "summary": "8K easy -- trust the training"},
+            12: {"km": 5, "summary": "5K shakeout -- stay loose, stay confident"},
+        }
+        return self._jf_long_run(long_runs[week], pace_easy)
+
+    def _5k_jf_saturday(self, week: int) -> dict:
+        pace_easy = self.paces.format("easy")
+        long_runs = {
+            1: {"km": 5, "summary": "5K easy -- race distance on day one, see where you are"},
+            2: {"km": 5, "summary": "5K easy -- same distance, smoother this time"},
+            3: {"km": 6, "summary": "6K easy -- a little beyond race distance"},
+            4: {"km": 6, "summary": "6K easy -- building confidence"},
+            5: {"km": 7, "summary": "7K easy -- your body is adapting"},
+            6: {"km": 8, "summary": "8K easy -- well beyond race distance now"},
+            7: {"km": 9, "summary": "9K easy -- almost double the race"},
+            8: {"km": 10, "summary": "10K easy -- THE BIG ONE. Walk breaks are fine."},
+            9: {"km": 8, "summary": "8K easy -- you've done this before"},
+            10: {"km": 7, "summary": "7K easy -- begin taper"},
+            11: {"km": 6, "summary": "6K easy -- trust the training"},
+            12: {"km": 4, "summary": "4K shakeout -- stay loose, stay confident"},
+        }
+        return self._jf_long_run(long_runs[week], pace_easy)
+
+    def _jf_long_run(self, lr: dict, pace_easy: str) -> dict:
+        miles = round(lr["km"] * 0.621, 1)
         return {
             "icon": "long-run",
             "title": "Long Run",
@@ -726,7 +864,6 @@ class Plan:
             "summary": lr["summary"],
             "details": (
                 f"All easy pace @ {pace_easy}. Walk breaks are fine. "
-                f"Practice race-day nutrition: take gels every 45 min, hydrate every 20 min. "
                 f"The goal is finishing the distance, not the pace."
             ),
             "garmin_steps": [

@@ -25,8 +25,10 @@ const mileageSubtitleEl = document.getElementById("mileage-subtitle");
 let currentDistance = "marathon";
 
 const DISTANCE_CONFIG = {
-  marathon: { badge: "42.195 km", wr: 2 * 3600 + 0 * 60 + 40, hourMin: 2 },
+  "5k": { badge: "5 km", wr: 12 * 60 + 35, hourMin: 0 },
+  "10k": { badge: "10 km", wr: 26 * 60 + 11, hourMin: 0 },
   half: { badge: "21.0975 km", wr: 57 * 60 + 31, hourMin: 0 },
+  marathon: { badge: "42.195 km", wr: 2 * 3600 + 0 * 60 + 40, hourMin: 2 },
 };
 
 const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -101,20 +103,17 @@ function getDisclaimer(secs) {
 
   // Below world record
   if (secs < cfg.wr) {
-    if (currentDistance === "half") {
-      return {
-        tone: "spicy",
-        text: "<strong>Hold on.</strong> That's faster than the world record (57:31, Kibiwott Kandie, Valencia 2020). Unless you've been secretly training at 2,400m altitude in Iten and your VO2max has its own Wikipedia page, we're going to need you to add a few minutes.",
-      };
-    }
-    return {
-      tone: "spicy",
-      text: "<strong>Hold on.</strong> That's faster than the world record (2:00:40, Kelvin Kiptum, Chicago 2023). Unless you're a time traveller from a future where humans have extra tendons, we're going to need you to add a few minutes. We believe in you — just not <em>that</em> much.",
+    const wrMsgs = {
+      "5k": "<strong>Hold on.</strong> That's faster than Joshua Cheptegei's world record (12:35, Monaco 2020). Unless you've been doing altitude training with the PACE Sports Management camp in Kaptagat, we're going to need a few more seconds on that.",
+      "10k": "<strong>Hold on.</strong> That's faster than Joshua Cheptegei's world record (26:11, Valencia 2020). You'd need to run every single kilometre in 2:37. That's not a training plan, that's a physics experiment. Add a minute or two.",
+      half: "<strong>Hold on.</strong> That's faster than the world record (57:31, Kibiwott Kandie, Valencia 2020). Unless you've been secretly training at 2,400m altitude in Iten and your VO2max has its own Wikipedia page, we're going to need you to add a few minutes.",
+      marathon: "<strong>Hold on.</strong> That's faster than the world record (2:00:40, Kelvin Kiptum, Chicago 2023). Unless you're a time traveller from a future where humans have extra tendons, we're going to need you to add a few minutes. We believe in you — just not <em>that</em> much.",
     };
+    return { tone: "spicy", text: wrMsgs[currentDistance] };
   }
 
-  if (currentDistance === "half") return getHalfDisclaimer(secs);
-  return getMarathonDisclaimer(secs);
+  const disclaimerFns = { "5k": get5kDisclaimer, "10k": get10kDisclaimer, half: getHalfDisclaimer, marathon: getMarathonDisclaimer };
+  return disclaimerFns[currentDistance](secs);
 }
 
 function getMarathonDisclaimer(secs) {
@@ -163,6 +162,47 @@ function getHalfDisclaimer(secs) {
     return { tone: "warm", text: "<strong>Sub-1:25 is seriously fast.</strong> You'll need a strong speed base and the discipline to hold pace when your legs start negotiating. Peak weeks hit 55–60 miles. This is a proper competitive block." };
   }
   return { tone: "warm", text: "<strong>You're entering competitive territory.</strong> Sub-1:35 unlocks the full program — track intervals, tempo runs, fartlek sessions, and PM doubles. Peak weeks push into the 50–65 mile range. A serious block for serious runners. If that sounds like you, let's go." };
+}
+
+function get5kDisclaimer(secs) {
+  const mins = secs / 60;
+
+  if (mins < 14) {
+    const msgs = [
+      "<strong>Sub-14 for a 5K.</strong> You're talking about running each kilometre in under 2:48. That's Cheptegei territory — the man who broke the world record on a track in Monaco while the rest of us were eating croissants. If your 1500m PR starts with a 3, maybe. Otherwise, we admire the audacity.",
+      "<strong>Let's be real.</strong> Sub-14 means averaging 4:30/mi for 3.1 miles. There are Olympic finalists who can't do that on a good day. We'll crunch the numbers, but the numbers are laughing.",
+      "<strong>You want sub-14?</strong> That puts you in a group small enough to fit in a single matatu from Eldoret to Iten. If you've been training at altitude since birth, sure. If not, add a couple of minutes and save yourself the existential crisis.",
+    ];
+    return { tone: "spicy", text: msgs[Math.floor(Math.random() * msgs.length)] };
+  }
+  if (mins >= 20) return null; // 20:00+ is just finish, no disclaimer
+  if (mins < 16) {
+    return { tone: "spicy", text: "<strong>Sub-16 is elite 5K running.</strong> You're in the top fraction of a percent of runners on earth. This needs years of structured training, a VO2max that makes cardiologists jealous, and the ability to hurt in ways most people reserve for tax season." };
+  }
+  if (mins < 18) {
+    return { tone: "warm", text: "<strong>Sub-18 is seriously competitive.</strong> You'll need a strong aerobic base, disciplined speedwork, and the mental toughness to hold pace when your lungs start filing complaints. Peak weeks around 40–45 miles." };
+  }
+  return { tone: "warm", text: "<strong>You're entering competitive territory.</strong> Sub-20 unlocks the full program — track intervals, tempo runs, and structured fartlek. Peak weeks around 35–40 miles. This is a real training block. If you're ready, let's go." };
+}
+
+function get10kDisclaimer(secs) {
+  const mins = secs / 60;
+
+  if (mins < 28) {
+    const msgs = [
+      "<strong>Sub-28 for a 10K.</strong> That's 2:48/km for 10 kilometres straight. You'd be racing alongside the Kenyans and Ethiopians who grew up running to school at 2,000m altitude. If your 5K PR is under 13:30, we'll take you seriously. Otherwise, the calculator is side-eyeing you pretty hard.",
+      "<strong>We admire the confidence.</strong> Sub-28 puts you in the realm of people who have actual shoe sponsorships and personal physios. Cheptegei ran 26:11 — and he's the best in the world. You do the math on how close that is.",
+    ];
+    return { tone: "spicy", text: msgs[Math.floor(Math.random() * msgs.length)] };
+  }
+  if (mins >= 42) return null; // 42:00+ is just finish, no disclaimer
+  if (mins < 34) {
+    return { tone: "spicy", text: "<strong>Sub-34 is elite-level 10K.</strong> Peak weeks hit 50–55 miles with serious interval sessions and tempo work. You'll need a 5K PR well under 17 minutes and the aerobic engine to back it up over double the distance." };
+  }
+  if (mins < 38) {
+    return { tone: "warm", text: "<strong>Sub-38 is strong competitive running.</strong> You'll need consistent mileage, structured speedwork, and the patience to not go out too fast. Peak weeks around 45–50 miles." };
+  }
+  return { tone: "warm", text: "<strong>You're entering competitive territory.</strong> Sub-42 unlocks the full program — track intervals, tempo runs, and fartlek sessions. Peak weeks around 40–50 miles. A serious block for runners who want to race, not just finish." };
 }
 
 function renderDisclaimer(secs) {
@@ -278,12 +318,15 @@ async function fetchPlan() {
     pacesSectionEl.style.display = "block";
 
     const isCompetitive = data.tier === "competitive";
-    skipPmLabel.style.display = isCompetitive ? "" : "none";
+    const hasDoubles = isCompetitive && (currentDistance === "marathon" || currentDistance === "half");
+    skipPmLabel.style.display = hasDoubles ? "" : "none";
     noTrackLabel.style.display = isCompetitive ? "" : "none";
-    if (!isCompetitive) {
+    if (!hasDoubles) {
       skipPmCheckbox.checked = false;
-      noTrackCheckbox.checked = false;
       dismissSkipPmMessage();
+    }
+    if (!isCompetitive) {
+      noTrackCheckbox.checked = false;
     }
 
     mileageSubtitleEl.textContent = isCompetitive
