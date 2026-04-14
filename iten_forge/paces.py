@@ -1,13 +1,16 @@
 """
-Pace calculator. All training zones derived from a goal time and race distance.
+Pace calculator. Training zones are anchored to the athlete's 5k-equivalent
+pace (derived from the goal via Riegel's formula T2 = T1 * (D2/D1)^1.06),
+not to the goal-distance race pace. This keeps zone relationships consistent
+whether the goal is a 5k or a marathon.
 
-Standard zone offsets (seconds per mile, scaled for km):
-    easy       = RP + 130
-    recovery   = RP + 195
-    race       = RP
-    tempo      = RP - 20
-    threshold  = RP - 30
-    interval   = RP - 55
+Zone offsets (seconds per mile over 5k-equivalent pace; scaled for km):
+    interval_5k = base            (VO2max / 5k race pace)
+    threshold   = base + 15
+    tempo       = base + 25
+    easy        = base + 105
+    recovery    = base + 165
+    race_pace   = goal_seconds / goal_distance  (actual target pace)
 """
 
 from dataclasses import dataclass
@@ -77,24 +80,36 @@ class PaceZones:
         return round(self.goal_seconds / self._distance)
 
     @property
+    def _equiv_5k_seconds(self) -> float:
+        """Riegel-predicted 5k time equivalent to the athlete's goal."""
+        d_mi = DISTANCES[self.distance]["mi"]
+        return self.goal_seconds * (FIVE_K_MILES / d_mi) ** 1.06
+
+    @property
+    def _base(self) -> int:
+        """5k-equivalent pace per unit — the anchor for training zones."""
+        dist_unit = FIVE_K_MILES if self.unit == "mi" else FIVE_K_KM
+        return round(self._equiv_5k_seconds / dist_unit)
+
+    @property
     def easy(self) -> int:
-        return self.race_pace + round(130 * self._scale)
+        return self._base + round(105 * self._scale)
 
     @property
     def recovery(self) -> int:
-        return self.race_pace + round(195 * self._scale)
+        return self._base + round(165 * self._scale)
 
     @property
     def tempo(self) -> int:
-        return self.race_pace - round(20 * self._scale)
+        return self._base + round(25 * self._scale)
 
     @property
     def threshold(self) -> int:
-        return self.race_pace - round(30 * self._scale)
+        return self._base + round(15 * self._scale)
 
     @property
     def interval_5k(self) -> int:
-        return self.race_pace - round(55 * self._scale)
+        return self._base
 
     def format(self, zone: str) -> str:
         """Format a named zone as a pace string."""
