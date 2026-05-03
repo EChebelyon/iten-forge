@@ -106,8 +106,8 @@ function getDisclaimer(secs) {
     const wrMsgs = {
       "5k": "<strong>Hold on.</strong> That's faster than Joshua Cheptegei's world record (12:35, Monaco 2020). Unless you've been doing altitude training with the PACE Sports Management camp in Kaptagat, we're going to need a few more seconds on that.",
       "10k": "<strong>Hold on.</strong> That's faster than Joshua Cheptegei's world record (26:11, Valencia 2020). You'd need to run every single kilometre in 2:37. That's not a training plan, that's a physics experiment. Add a minute or two.",
-      half: "<strong>Hold on.</strong> That's faster than the world record (57:31, Kibiwott Kandie, Valencia 2020). Unless you've been secretly training at 2,400m altitude in Iten and your VO2max has its own Wikipedia page, we're going to need you to add a few minutes.",
-      marathon: "<strong>Hold on.</strong> That's faster than the world record (2:00:40, Kelvin Kiptum, Chicago 2023). Unless you're a time traveller from a future where humans have extra tendons, we're going to need you to add a few minutes. We believe in you — just not <em>that</em> much.",
+      half: "<strong>Hold on.</strong> That's faster than the world record (57:20, Jacob Kiplimo, Lisbon 2026). Unless you've been secretly training at 2,400m altitude in Iten and your VO2max has its own Wikipedia page, we're going to need you to add a few minutes.",
+      marathon: "<strong>Hold on.</strong> That's faster than the world record (1:59:30, Sabastian Sawe, London 2026 — the first sub-2 in race conditions). Unless you're a time traveller from a future where humans have extra tendons, we're going to need you to add a few minutes. We believe in you — just not <em>that</em> much.",
     };
     return { tone: "spicy", text: wrMsgs[currentDistance] };
   }
@@ -122,7 +122,7 @@ function getMarathonDisclaimer(secs) {
   if (hours < 2 + 5 / 60) {
     const msgs = [
       "<strong>Sub 2:05? Sure, and I'm Eliud Kipchoge's pacemaker.</strong> There are maybe 15 people alive who can do this, and they all live at altitude, eat ugali three times a day, and haven't sat in an office chair since 2007. But hey — if you've got a VO2max north of 85 and your resting heart rate is \"basically dead,\" who are we to judge? Let's see those paces.",
-      "<strong>Are you... are you Kelvin Kiptum?</strong> Because sub-2:05 is not a goal, it's a press conference. You'd need to average under 4:44/mi for 26.2 miles. Most people can't hold that pace for a single mile. On a bike. Downhill. But if you insist, we'll crunch the numbers. Just know the math is judging you.",
+      "<strong>Are you... are you Sabastian Sawe?</strong> Because sub-2:05 is not a goal, it's a press conference. You'd need to average under 4:44/mi for 26.2 miles. Most people can't hold that pace for a single mile. On a bike. Downhill. But if you insist, we'll crunch the numbers. Just know the math is judging you.",
       "<strong>We ran the numbers. The numbers ran away.</strong> Sub-2:05 puts you in a group so small they could share a matatu in Eldoret. This isn't a training plan, it's a scientific experiment. You'll need to run every interval like a cheetah who's late for a meeting. We'll generate the paces, but we're doing it with one eyebrow raised.",
     ];
     return { tone: "spicy", text: msgs[Math.floor(Math.random() * msgs.length)] };
